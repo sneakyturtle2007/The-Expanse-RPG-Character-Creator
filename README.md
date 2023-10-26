@@ -1,7 +1,7 @@
 # The-Expanse-RPG-Character-Creator
  The Source code and installer for The-Expanse-RPG-Character-Creator  
    
- Pre-Alpha-  
+ Pre-Alpha-
   - Basic stats editable  
   - Can make characters  
 # Creators of The Expanse RPG: Green Ronin Publishing
