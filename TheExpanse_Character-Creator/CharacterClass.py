@@ -82,6 +82,7 @@ class character:
     
     def set_background(self,backgroundroll):
         backgrounds = ["Bohemian","Exile","Outcast","Military","Laborer","Urban","Academic","Suburban","Trade","Aristocratic","Corporate","Cosmopolitan"]
+        backgroundroll = backgroundroll.replace("\n","")
         if backgroundroll in backgrounds:
             return backgroundroll
         else:

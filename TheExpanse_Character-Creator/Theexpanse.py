@@ -31,15 +31,8 @@ except ImportError:
 
 from CharacterClass import character
 
-#WINDOW AND CANVAS
-window = Tk()
-window.geometry("500x500")
-window.resizable(False,False)
-window.title("Character Creator by: Luis Alejandro Blake")
-canvas = Canvas( window ,bg = "#212121" , height="500", width="500")
-canvas.pack()
+from GenericFunctions_MainMenu_CharacterMaker import *
 
-#PROGRAM VARIABLES
 currently_making_character = False
 if_origin_already_set = False
 background_set = False
@@ -75,45 +68,9 @@ perception.set("")
 strength.set("")
 willpower.set("")
 
-
-
-
 #FUNCTIONS
 
 #FUNCTIONS FOR GETTING AND DISPLAYING CHARACTER INFORMATION
-
-def get_characters():
-    global current_character_cards,Existing_characters
-    characters = []
-    current_character_cards = []
-    Existing_characters = []
-    index = 0
-    for image in os.listdir("images\\"):
-        
-        if(str(image) != "noimage.jpg" and str(image) != "photo1.jpg" and str(image) != "Belter.jpg" and str(image) != "TheExpanse-Earther.jpg" and str(image) != "Martian.jpg" and str(image) != "Character_Sheet_1.jpg" and str(image) != "Character_Sheet_2.jpg"):
-            print("finding characters-")
-            current_character = []
-            current_character.append(str(image))
-            
-            with open("TheExpanseCharacterCreator.txt") as characters_text:
-                characters2 = characters_text.readlines()
-                
-                Character = characters2[index].split(",")
-                print("\n")
-                print("Transparency test" , Character )
-                print("\n")
-               
-                temp_character = character(Character[0],Character[1],Character[2],Character[3],Character[4],convert_to_die_roll(int(Character[5])),convert_to_die_roll(int(Character[6])),convert_to_die_roll(int(Character[7])),convert_to_die_roll(int(Character[8])),convert_to_die_roll(int(Character[9])),convert_to_die_roll(int(Character[10])),convert_to_die_roll(int(Character[11])),convert_to_die_roll(int(Character[12])),convert_to_die_roll(int(Character[13])),Character[14],Character[15],Character[16])
-
-                Existing_characters.append(temp_character)
-                print(temp_character)
-                print(Character)
-                current_character.append(Character[0])
-            characters.append(current_character)
-            
-            index += 1
-    current_character_cards = characters
-    return characters
 
 
 def create_character_card(image_path,x,y, parameters,name):
@@ -130,9 +87,11 @@ def create_character_card(image_path,x,y, parameters,name):
     character_name_label.place(x= x+(35-(len(name)*3)), y = y+80)
     window_elements.append(character_name_label)
 
-    
-def display_characters(characters):
+    #current_character_cards is not used in this function, but is needed to prevent error because the get_characters function returns current_character_cards
+def display_characters(characters, current_character_cards ,Existing_characters_current):
     global window_elements,secondary_buttons_andor_elements,Existing_characters
+    
+    Existing_characters = Existing_characters_current
 
     for element in window_elements:
         element.destroy()
@@ -209,14 +168,31 @@ def display_character_ClickedOn(ifbackpage,stats):
         background.pack()
         background.place(x=-20,y=0)
         window_elements.append(background)
+        
         display_stats(stats)
-        back_button, edit_button, next_button  = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:display_characters(current_character_cards)), Button(window, bg="#424242", fg = "#E6E6E6",text="Edit",font=("Arial", 10),command=lambda:Edit_displayed_character(stats)), Button(window, bg="#424242", fg = "#E6E6E6",text="Next",font=("Arial", 10),command=lambda:display_character_ClickedOn("True",stats))
         
-        next_button.pack() ,back_button.pack(), edit_button.pack()
+        characters = get_characters()
         
-        back_button.place(x=10,y=10),next_button.place(x=500,y=800),edit_button.place(x=10,y=800)
+        back_button = Button(window, bg="#424242", fg="#E6E6E6", text="Back", font=("Arial", 10),
+                     command=lambda: display_characters(*characters))
+
+        edit_button = Button(window, bg="#424242", fg="#E6E6E6", text="Edit", font=("Arial", 10),
+                     command=lambda: Edit_displayed_character(stats))
+
+        next_button = Button(window, bg="#424242", fg="#E6E6E6", text="Next", font=("Arial", 10),
+                     command=lambda: display_character_ClickedOn("True", stats))
+
+        next_button.pack() 
+        back_button.pack()
+        edit_button.pack()
         
-        secondary_buttons_andor_elements.append(next_button), secondary_buttons_andor_elements.append(back_button), secondary_buttons_andor_elements.append(edit_button)
+        back_button.place(x=10,y=10)
+        next_button.place(x=500,y=800)
+        edit_button.place(x=10,y=800)
+        
+        secondary_buttons_andor_elements.append(next_button)
+        secondary_buttons_andor_elements.append(back_button)
+        secondary_buttons_andor_elements.append(edit_button)
         
         
 def display_stats(stats):
@@ -237,17 +213,7 @@ def display_stats(stats):
         index += 1
 
 
-def convert_to_die_roll(ability_score):
-    ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]
-    print("Converting to die roll: \n ------------------ \n")
-    for range_and_score in ability_score_table:
-        if(ability_score == range_and_score[1]):
-            print("ability score : " , ability_score , "\n")
-            
-            print("number of that score: " , range_and_score[0][0], "\n")
-            print("Done converting to die roll: \n ------------------ \n")
-            return range_and_score[0][0]
-    print("ERROR: ability score not found\n\n\n")
+
    
     
 def save_displayed_character(stats):
@@ -742,7 +708,7 @@ def save_character():
     
 #MAIN PROGRAM
 print("Program Start \n\n\n")
-character1 = get_characters()
-display_characters(character1)
+characters, current_character_cards, Existing_characters = get_characters()
+display_characters(characters,current_character_cards,Existing_characters)
 
 window.mainloop()
