@@ -88,7 +88,6 @@ def get_characters():
     current_character_cards = []
     Existing_characters = []
     index = 0
-    ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]
     for image in os.listdir("images\\"):
         
         if(str(image) != "noimage.jpg" and str(image) != "photo1.jpg" and str(image) != "Belter.jpg" and str(image) != "TheExpanse-Earther.jpg" and str(image) != "Martian.jpg" and str(image) != "Character_Sheet_1.jpg" and str(image) != "Character_Sheet_2.jpg"):
@@ -103,15 +102,7 @@ def get_characters():
                 print("\n")
                 print("Transparency test" , Character )
                 print("\n")
-                index1 = 0
-                #for value in Character:
-                    #if index1 > 4 and index1 < 14:
-                       # for range_and_score in ability_score_table:
-                            #if(int(value) == range_and_score[1]):
-                                #Character[index1] = range_and_score[0][0]   
-                    #else:
-                        #Character[index1] = value
-                    #index1 += 1
+               
                 temp_character = character(Character[0],Character[1],Character[2],Character[3],Character[4],convert_to_die_roll(int(Character[5])),convert_to_die_roll(int(Character[6])),convert_to_die_roll(int(Character[7])),convert_to_die_roll(int(Character[8])),convert_to_die_roll(int(Character[9])),convert_to_die_roll(int(Character[10])),convert_to_die_roll(int(Character[11])),convert_to_die_roll(int(Character[12])),convert_to_die_roll(int(Character[13])),Character[14],Character[15],Character[16])
 
                 Existing_characters.append(temp_character)
