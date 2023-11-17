@@ -44,11 +44,8 @@ Existing_characters = []
 current_character_cards = []
 current_characeter_image_path = ""
 current_character_being_made = []
-stat_locations = [(60,60),(65,87),(93,117),(92,145),
-                      (260,237),(260,277),(260,318),(260,357),(260,397),(260,438),(260,476),(260,517),(260,557),
-                      (310,40)]
 
-displaying_character_background_constant = (Image.open("images\\Character_Sheet_1.jpg").width, Image.open("images\\Character_Sheet_1.jpg").height)
+displaying_character_background_constant = (Image.open("images\\Character_Sheet_1.jpg").width,900)
 accuracy = StringVar(window)
 communication = StringVar(window)
 constitution = StringVar(window)
@@ -158,11 +155,11 @@ def display_character_ClickedOn(ifbackpage,stats):
         canvas.delete("all")
         window_elements = []
         character_sheet = Image.open("images\\Character_Sheet_1.jpg")
-        character_sheet_resized = character_sheet.resize((character_sheet.width+10,height), Image.NEAREST)
+        character_sheet_resized = character_sheet.resize((character_sheet.width+10,displaying_character_background_constant[1] + 10), Image.NEAREST)
         character_sheet_background = ImageTk.PhotoImage(character_sheet_resized)
-        geometry_text = str(character_sheet.width-10) + "x" + str(height)
+        geometry_text = str(displaying_character_background_constant[0]) + "x" + str(displaying_character_background_constant[1])
         window.geometry(geometry_text)
-        canvas.config(width=character_sheet.width,height=height)
+        canvas.config(width=character_sheet.width,height=displaying_character_background_constant[1])
         background = tk.Label(window,image=character_sheet_background)
         background.image = character_sheet_background
         background.pack()
@@ -196,13 +193,16 @@ def display_character_ClickedOn(ifbackpage,stats):
         
         
 def display_stats(stats):
-    global secondary_buttons_andor_elements,stat_locations
+    global secondary_buttons_andor_elements
+    stat_locations = [(60,64),(65,93),(93,124),(92,152),
+                      (260,250),(260,291),(260,334),(260,375),(260,416),(260,459),(260,502),(260,544),(260,585),
+                      (310,40)]
     print(stats)
     stat_values = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age]#,stats.height,stats.weight,stats.personality
     index = 0
     for values in stat_values:
         if index < 4:
-            stat_label = tk.Label(window, text = values, bg="#FFFFFF", fg = "#000000",font=("Arial", 10))
+            stat_label = tk.Label(window, text = values, bg="#FFFFFF", fg = "#000000",font=("Arial", 9))
         elif index < 13:
             stat_label = tk.Label(window, text = values, bg="#FFFFFF", fg = "#000000",font=("Arial", 14))
         else:
@@ -267,8 +267,11 @@ def save_displayed_character(stats):
     
 
 def Edit_displayed_character(stats):
-    global secondary_buttons_andor_elements,stat_locations,window_elements
-    print("temp")
+    global secondary_buttons_andor_elements,window_elements
+    stat_locations = [(60,64),(65,93),(93,124),(92,152),
+                      (260,250),(260,291),(260,334),(260,375),(260,416),(260,459),(260,502),(260,544),(260,585),
+                      (310,40)]
+    
     for element in secondary_buttons_andor_elements:
         element.destroy()
     
