@@ -88,3 +88,6 @@ def get_characters():
             index += 1
     current_character_cards = characters
     return characters, current_character_cards, Existing_characters_current
+
+
+
