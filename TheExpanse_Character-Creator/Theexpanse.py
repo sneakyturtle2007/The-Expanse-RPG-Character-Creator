@@ -33,6 +33,8 @@ from CharacterClass import character
 
 from GenericFunctions_MainMenu_CharacterMaker import *
 
+# Program Variables
+
 currently_making_character = False
 if_origin_already_set = False
 background_set = False
@@ -71,7 +73,7 @@ willpower.set("")
 
 
 def create_character_card(image_path,x,y, parameters,name):
-    global window_elements
+    
     img = Image.open(image_path)
     resized_image = img.resize((90, 80), Image.NEAREST)
     image = ImageTk.PhotoImage(resized_image)
@@ -82,9 +84,12 @@ def create_character_card(image_path,x,y, parameters,name):
     character_name_label = tk.Label(window, text = name, bg="#212121", fg = "#E6E6E6",font=("Arial", 10))
     character_name_label.pack()
     character_name_label.place(x= x+(35-(len(name)*3)), y = y+80)
-    window_elements.append(character_name_label)
+    
+    return character_name_label
+    
 
-    #current_character_cards is not used in this function, but is needed to prevent error because the get_characters function returns current_character_cards
+
+#current_character_cards is not used in this function, but is needed to prevent error because the get_characters function returns current_character_cards
 def display_characters(characters, current_character_cards ,Existing_characters_current):
     global window_elements,secondary_buttons_andor_elements,Existing_characters
     
@@ -104,7 +109,7 @@ def display_characters(characters, current_character_cards ,Existing_characters_
     
     for character in characters:
         
-        create_character_card("images\\" + character[0], 37 + (110 *index), increment,Existing_characters[index], character[1])
+        window_elements.append(create_character_card("images\\" + character[0], 37 + (110 *index), increment,Existing_characters[index], character[1]))
         if(index % 3 == 0 and index != 0):
             index -= index
             increment += 120
@@ -139,7 +144,7 @@ def display_character_ClickedOn(ifbackpage,stats):
         background.pack()
         background.place(x=-20,y=0)
         
-        window_elements.append(background)
+        
         #display_stats(stats)
         back_button, edit_button  = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:display_character_ClickedOn("False",stats)), Button(window, bg="#424242", fg = "#E6E6E6",text="Edit",font=("Arial", 10),command=lambda:Edit_displayed_character(stats))
     
@@ -147,8 +152,10 @@ def display_character_ClickedOn(ifbackpage,stats):
         edit_button.pack()
         back_button.place(x=10,y=10)
         
+        window_elements.append(background) 
+        secondary_buttons_andor_elements.append(back_button)
         
-        window_elements.append(back_button)
+        
     else: 
         for element in window_elements:
             element.destroy()
@@ -164,7 +171,7 @@ def display_character_ClickedOn(ifbackpage,stats):
         background.image = character_sheet_background
         background.pack()
         background.place(x=-20,y=0)
-        window_elements.append(background)
+        
         
         display_stats(stats)
         
@@ -187,9 +194,13 @@ def display_character_ClickedOn(ifbackpage,stats):
         next_button.place(x=500,y=800)
         edit_button.place(x=10,y=800)
         
+        window_elements.append(background)
         secondary_buttons_andor_elements.append(next_button)
         secondary_buttons_andor_elements.append(back_button)
         secondary_buttons_andor_elements.append(edit_button)
+        
+        
+        
         
         
 def display_stats(stats):
@@ -212,9 +223,6 @@ def display_stats(stats):
         secondary_buttons_andor_elements.append(stat_label)
         index += 1
 
-
-
-   
     
 def save_displayed_character(stats):
     global secondary_buttons_andor_elements,Existing_characters

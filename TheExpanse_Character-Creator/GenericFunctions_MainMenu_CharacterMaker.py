@@ -42,6 +42,8 @@ canvas.pack()
 
 #PROGRAM VARIABLES
 
+
+
 def convert_to_die_roll(ability_score):
     ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]
     print("Converting to die roll: \n ------------------ \n")
