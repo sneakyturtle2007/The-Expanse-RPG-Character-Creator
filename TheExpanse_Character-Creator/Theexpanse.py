@@ -89,28 +89,28 @@ def create_character_card(image_path,x,y, parameters,name):
 def display_characters(characters, current_character_cards ,Existing_characters_current):#current_character_cards is not used in this function, but is needed to prevent error because the get_characters function returns current_character_cards
     global window_elements,secondary_buttons_andor_elements,Existing_characters
     
-    Existing_characters = Existing_characters_current
-
     for element in window_elements:
         element.destroy()
     for element in secondary_buttons_andor_elements:
         element.destroy()
         
+    Existing_characters = Existing_characters_current
     window_elements = []
-    
-    canvas.config(width=500,height=500)
-    window.geometry("500x500")
     index = 0
     increment = 40
+
+    canvas.config(width=500,height=500)
+    window.geometry("500x500")
+    
     
     for character in characters:
-        
         window_elements.append(create_character_card("images\\" + character[0], 37 + (110 *index), increment,Existing_characters[index], character[1]))
         if(index % 3 == 0 and index != 0):
             index -= index
             increment += 120
         else:
             index += 1
+            
     Add_characer_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Add Character",font=("Arial", 10),command=lambda:display_charactermaker())           
     Add_characer_button.pack()
     Add_characer_button.place(x=380,y=440)
@@ -119,22 +119,29 @@ def display_characters(characters, current_character_cards ,Existing_characters_
         
 def display_character_ClickedOn(ifbackpage,stats):
     global window_elements,displaying_character_background_constant,secondary_buttons_andor_elements
+    
     height = window.winfo_screenheight()
    
     window.attributes("-topmost", True)
 
     if ifbackpage == "True":
+        
         for elements in window_elements:
             elements.destroy()
         for element in secondary_buttons_andor_elements:
             elements.destroy()
+            
         window_elements = []
+        
         character_sheet = Image.open("images\\Character_Sheet_2.jpg")
         character_sheet_resized = character_sheet.resize((displaying_character_background_constant[0]+30,height ), Image.NEAREST)
         character_sheet_background = ImageTk.PhotoImage(character_sheet_resized)
+        
         geometry_text = str(displaying_character_background_constant[0]-10) + "x" + str(height)
+        
         window.geometry(geometry_text)
         canvas.config(width=displaying_character_background_constant[0],height=height)
+        
         background = tk.Label(window,image=character_sheet_background)
         background.image = character_sheet_background
         background.pack()
@@ -142,8 +149,8 @@ def display_character_ClickedOn(ifbackpage,stats):
         
         
         #display_stats(stats)
-        back_button, edit_button  = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:display_character_ClickedOn("False",stats)), Button(window, bg="#424242", fg = "#E6E6E6",text="Edit",font=("Arial", 10),command=lambda:Edit_displayed_character(stats))
-    
+        back_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:display_character_ClickedOn("False",stats))
+        edit_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Edit",font=("Arial", 10),command=lambda:Edit_displayed_character(stats))
         back_button.pack()
         edit_button.pack()
         back_button.place(x=10,y=10)
@@ -153,16 +160,23 @@ def display_character_ClickedOn(ifbackpage,stats):
         
         
     else: 
+        
         for element in window_elements:
             element.destroy()
+            
         canvas.delete("all")
+        
         window_elements = []
+        
         character_sheet = Image.open("images\\Character_Sheet_1.jpg")
         character_sheet_resized = character_sheet.resize((character_sheet.width+10,displaying_character_background_constant[1] + 10), Image.NEAREST)
         character_sheet_background = ImageTk.PhotoImage(character_sheet_resized)
+        
         geometry_text = str(displaying_character_background_constant[0]) + "x" + str(displaying_character_background_constant[1])
+        
         window.geometry(geometry_text)
         canvas.config(width=character_sheet.width,height=displaying_character_background_constant[1])
+        
         background = tk.Label(window,image=character_sheet_background)
         background.image = character_sheet_background
         background.pack()
@@ -205,59 +219,61 @@ def display_stats(stats):
     stat_values = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age]#,stats.height,stats.weight,stats.personality
     index = 0
     for values in stat_values:
+        
         if index < 4:
             stat_label = tk.Label(window, text = values, bg="#FFFFFF", fg = "#000000",font=("Arial", 9))
         elif index < 13:
             stat_label = tk.Label(window, text = values, bg="#FFFFFF", fg = "#000000",font=("Arial", 14))
         else:
             stat_label = tk.Label(window, text =   values, bg="#FFFFFF", fg = "#000000",font=("Arial", 9))
+            
         stat_label.pack()
         stat_label.place(x= stat_locations[index][0], y = stat_locations[index][1])
         secondary_buttons_andor_elements.append(stat_label)
+        
         index += 1
 
     
 def save_displayed_character(stats):
     global secondary_buttons_andor_elements,Existing_characters
+    
     UpdatedCharacter_list = ""
-    current_character_stats= [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality]
+    current_character_stats = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality]
     index1 = 0
    
-   
     for elements in secondary_buttons_andor_elements:
+        
         if isinstance(elements,Text):
             
             value = elements.get("1.0", "end-1c")
             if index1 > 3 and index1 < 13:
-            
                 current_character_stats[index1] = convert_to_die_roll(int(value))
             else:
                 current_character_stats[index1] = value
             
             index1 += 1
  
-    Characters_text_file= open("TheExpanseCharacterCreator.txt", "w")
+    Characters_text_file = open("TheExpanseCharacterCreator.txt", "w")
     index1 = 0
+    
     for characters in Existing_characters:
         if(characters.name == stats.name):
         
-           
-    
             Existing_characters[index1] = character(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2])
-
-        
+            
         if(index1 != len(Existing_characters)-1 ):
+            
             UpdatedCharacter_list += Existing_characters[index1].__repr__()
             UpdatedCharacter_list += "\n"
         else:
             
             UpdatedCharacter_list += Existing_characters[index1].__repr__()
             
-            
- 
         index1  += 1
+        
     Characters_text_file.write(UpdatedCharacter_list)
     Characters_text_file.close()
+    
     display_character_ClickedOn("False", character(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2]))
     
 
@@ -281,19 +297,100 @@ def Edit_displayed_character(stats):
     
     secondary_buttons_andor_elements = []
    
+    
     stat_values = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age]
-    name, origin, background, social_class, accuracy, communication, constitution, dexterity, fighting, intelligence, perception, strength, willpower, age = tk.Text(window, height=1,width=10), tk.Text(window, height=1,width=10),tk.Text(window, height=1,width=12), tk.Text(window, height=1,width=12), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=6)
     
+    name = tk.Text(window, height=1,width=10)
+    origin = tk.Text(window, height=1,width=10)
+    background = tk.Text(window, height=1,width=12)
+    social_class = tk.Text(window, height=1,width=12)
+    accuracy = tk.Text(window, height=1,width=2)
+    communication = tk.Text(window, height=1,width=2)
+    constitution = tk.Text(window, height=1,width=2)
+    dexterity = tk.Text(window, height=1,width=2)
+    fighting = tk.Text(window, height=1,width=2)
+    intelligence = tk.Text(window, height=1,width=2)
+    perception = tk.Text(window, height=1,width=2)
+    strength =  tk.Text(window, height=1,width=2)
+    willpower = tk.Text(window, height=1,width=2)
+    age = tk.Text(window, height=1,width=6)
     
-    name.configure(font= ("TkDefaultFont", 10)), origin.configure(font=("TkDefaultFont",10)), background.configure(font=("TkDefaultFont",10)), social_class.configure(font=("TkDefaultFont",10)), accuracy.configure(font=("TkDefaultFont",14)), communication.configure(font=("TkDefaultFont",14)), constitution.configure(font=("TkDefaultFont",14)), dexterity.configure(font=("TkDefaultFont",14)), fighting.configure(font=("TkDefaultFont",14)), intelligence.configure(font=("TkDefaultFont",14)), perception.configure(font=("TkDefaultFont",14)), strength.configure(font=("TkDefaultFont",14)), willpower.configure(font=("TkDefaultFont",14)), age.configure(font=("TkDefaultFont",10))
+    name.configure(font= ("TkDefaultFont", 10))
+    origin.configure(font=("TkDefaultFont",10))
+    background.configure(font=("TkDefaultFont",10))
+    social_class.configure(font=("TkDefaultFont",10))
+    accuracy.configure(font=("TkDefaultFont",14))
+    communication.configure(font=("TkDefaultFont",14))
+    constitution.configure(font=("TkDefaultFont",14))
+    dexterity.configure(font=("TkDefaultFont",14))
+    fighting.configure(font=("TkDefaultFont",14))
+    intelligence.configure(font=("TkDefaultFont",14))
+    perception.configure(font=("TkDefaultFont",14))
+    strength.configure(font=("TkDefaultFont",14))
+    willpower.configure(font=("TkDefaultFont",14))
+    age.configure(font=("TkDefaultFont",10))
     
-    name.insert("end-1c", stat_values[0]), origin.insert("end-1c", stat_values[1]), background.insert("end-1c", stat_values[2]), social_class.insert("end-1c", stat_values[3]), accuracy.insert("end-1c", stat_values[4]), communication.insert("end-1c", stat_values[5]), constitution.insert("end-1c", stat_values[6]), dexterity.insert("end-1c", stat_values[7]), fighting.insert("end-1c", stat_values[8]), intelligence.insert("end-1c", stat_values[9]), perception.insert("end-1c", stat_values[10]), strength.insert("end-1c", stat_values[11]), willpower.insert("end-1c", stat_values[12]), age.insert("end-1c", stat_values[13]) 
+    name.insert("end-1c", stat_values[0])
+    origin.insert("end-1c", stat_values[1])
+    background.insert("end-1c", stat_values[2])
+    social_class.insert("end-1c", stat_values[3])
+    accuracy.insert("end-1c", stat_values[4])
+    communication.insert("end-1c", stat_values[5])
+    constitution.insert("end-1c", stat_values[6])
+    dexterity.insert("end-1c", stat_values[7])
+    fighting.insert("end-1c", stat_values[8])
+    intelligence.insert("end-1c", stat_values[9])
+    perception.insert("end-1c", stat_values[10])
+    strength.insert("end-1c", stat_values[11])
+    willpower.insert("end-1c", stat_values[12])
+    age.insert("end-1c", stat_values[13]) 
     
-    name.pack(), origin.pack(), background.pack(), social_class.pack(), accuracy.pack(), communication.pack(), constitution.pack(), dexterity.pack(), fighting.pack(), intelligence.pack(), perception.pack(), strength.pack(), willpower.pack(), age.pack()
+    name.pack()
+    origin.pack()
+    background.pack()
+    social_class.pack()
+    accuracy.pack()
+    communication.pack()
+    constitution.pack()
+    dexterity.pack()
+    fighting.pack()
+    intelligence.pack()
+    perception.pack()
+    strength.pack()
+    willpower.pack()
+    age.pack()
 
-    name.place(x= stat_locations[0][0], y = stat_locations[0][1]), origin.place(x= stat_locations[1][0], y = stat_locations[1][1]), background.place(x= stat_locations[2][0], y = stat_locations[2][1]), social_class.place(x= stat_locations[3][0], y = stat_locations[3][1]), accuracy.place(x= stat_locations[4][0], y = stat_locations[4][1]), communication.place(x= stat_locations[5][0], y = stat_locations[5][1]), constitution.place(x= stat_locations[6][0], y = stat_locations[6][1]), dexterity.place(x= stat_locations[7][0], y = stat_locations[7][1]), fighting.place(x= stat_locations[8][0], y = stat_locations[8][1]), intelligence.place(x= stat_locations[9][0], y = stat_locations[9][1]), perception.place(x= stat_locations[10][0], y = stat_locations[10][1]), strength.place(x= stat_locations[11][0], y = stat_locations[11][1]), willpower.place(x= stat_locations[12][0], y = stat_locations[12][1]), age.place(x= stat_locations[13][0], y = stat_locations[13][1])
+    name.place(x= stat_locations[0][0], y = stat_locations[0][1])
+    origin.place(x= stat_locations[1][0], y = stat_locations[1][1])
+    background.place(x= stat_locations[2][0], y = stat_locations[2][1])
+    social_class.place(x= stat_locations[3][0], y = stat_locations[3][1])
+    accuracy.place(x= stat_locations[4][0], y = stat_locations[4][1])
+    communication.place(x= stat_locations[5][0], y = stat_locations[5][1])
+    constitution.place(x= stat_locations[6][0], y = stat_locations[6][1])
+    dexterity.place(x= stat_locations[7][0], y = stat_locations[7][1])
+    fighting.place(x= stat_locations[8][0], y = stat_locations[8][1])
+    intelligence.place(x= stat_locations[9][0], y = stat_locations[9][1])
+    perception.place(x= stat_locations[10][0], y = stat_locations[10][1])
+    strength.place(x= stat_locations[11][0], y = stat_locations[11][1])
+    willpower.place(x= stat_locations[12][0], y = stat_locations[12][1])
+    age.place(x= stat_locations[13][0], y = stat_locations[13][1])
     
-    secondary_buttons_andor_elements.append(name), secondary_buttons_andor_elements.append(origin), secondary_buttons_andor_elements.append(background), secondary_buttons_andor_elements.append(social_class), secondary_buttons_andor_elements.append(accuracy), secondary_buttons_andor_elements.append(communication), secondary_buttons_andor_elements.append(constitution), secondary_buttons_andor_elements.append(dexterity), secondary_buttons_andor_elements.append(fighting), secondary_buttons_andor_elements.append(intelligence), secondary_buttons_andor_elements.append(perception), secondary_buttons_andor_elements.append(strength), secondary_buttons_andor_elements.append(willpower), secondary_buttons_andor_elements.append(age), secondary_buttons_andor_elements.append(back_button), secondary_buttons_andor_elements.append(save_button)
+    secondary_buttons_andor_elements.append(name)
+    secondary_buttons_andor_elements.append(origin)
+    secondary_buttons_andor_elements.append(background)
+    secondary_buttons_andor_elements.append(social_class)
+    secondary_buttons_andor_elements.append(accuracy)
+    secondary_buttons_andor_elements.append(communication)
+    secondary_buttons_andor_elements.append(constitution)
+    secondary_buttons_andor_elements.append(dexterity)
+    secondary_buttons_andor_elements.append(fighting)
+    secondary_buttons_andor_elements.append(intelligence)
+    secondary_buttons_andor_elements.append(perception)
+    secondary_buttons_andor_elements.append(strength)
+    secondary_buttons_andor_elements.append(willpower)
+    secondary_buttons_andor_elements.append(age)
+    secondary_buttons_andor_elements.append(back_button)
+    secondary_buttons_andor_elements.append(save_button)
 
 
 #FUNCTIONS FOR CHARACTER CREATION
@@ -304,8 +401,11 @@ def display_charactermaker():
     
     for element in window_elements:
         element.destroy()
+        
     canvas.delete("all")
+    
     window_elements = []
+    
     current_characeter_image_path = "images\\noimage.jpg"
     img = Image.open("images\\noimage.jpg")
     resized_image = img.resize((170, 200), Image.NEAREST)
@@ -703,7 +803,7 @@ def save_character():
         
     
 #MAIN PROGRAM
-print("Program Start \n\n\n")
+
 characters, current_character_cards, Existing_characters = get_characters()
 display_characters(characters,current_character_cards,Existing_characters)
 
