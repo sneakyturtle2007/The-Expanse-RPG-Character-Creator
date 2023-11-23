@@ -69,8 +69,6 @@ willpower.set("")
 
 #FUNCTIONS
 
-#FUNCTIONS FOR GETTING AND DISPLAYING CHARACTER INFORMATION
-
 
 def create_character_card(image_path,x,y, parameters,name):
     
@@ -88,9 +86,7 @@ def create_character_card(image_path,x,y, parameters,name):
     return character_name_label
     
 
-
-#current_character_cards is not used in this function, but is needed to prevent error because the get_characters function returns current_character_cards
-def display_characters(characters, current_character_cards ,Existing_characters_current):
+def display_characters(characters, current_character_cards ,Existing_characters_current):#current_character_cards is not used in this function, but is needed to prevent error because the get_characters function returns current_character_cards
     global window_elements,secondary_buttons_andor_elements,Existing_characters
     
     Existing_characters = Existing_characters_current
@@ -199,16 +195,13 @@ def display_character_ClickedOn(ifbackpage,stats):
         secondary_buttons_andor_elements.append(back_button)
         secondary_buttons_andor_elements.append(edit_button)
         
-        
-        
-        
-        
+             
 def display_stats(stats):
     global secondary_buttons_andor_elements
     stat_locations = [(60,64),(65,93),(93,124),(92,152),
                       (260,250),(260,291),(260,334),(260,375),(260,416),(260,459),(260,502),(260,544),(260,585),
                       (310,40)]
-    print(stats)
+
     stat_values = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age]#,stats.height,stats.weight,stats.personality
     index = 0
     for values in stat_values:
@@ -230,44 +223,38 @@ def save_displayed_character(stats):
     current_character_stats= [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality]
     index1 = 0
    
-    print("debug1")
-    print(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],convert_to_die_roll(int(current_character_stats[4])),convert_to_die_roll(int(current_character_stats[5])),convert_to_die_roll(int(current_character_stats[6])),convert_to_die_roll(int(current_character_stats[7])),convert_to_die_roll(int(current_character_stats[8])),convert_to_die_roll(int(current_character_stats[9])),convert_to_die_roll(int(current_character_stats[10])),convert_to_die_roll(int(current_character_stats[11])),convert_to_die_roll(int(current_character_stats[12])), current_character_stats[1], current_character_stats[3], current_character_stats[2])
+   
     for elements in secondary_buttons_andor_elements:
         if isinstance(elements,Text):
             
             value = elements.get("1.0", "end-1c")
             if index1 > 3 and index1 < 13:
-                print("This is the value at the instance: " , value , "\n")
-                print("-------------------------")
-                print(int(value) , "int")
-                print("-------------------------\n")
+            
                 current_character_stats[index1] = convert_to_die_roll(int(value))
             else:
                 current_character_stats[index1] = value
             
             index1 += 1
-    print(current_character_stats)
+ 
     Characters_text_file= open("TheExpanseCharacterCreator.txt", "w")
     index1 = 0
     for characters in Existing_characters:
         if(characters.name == stats.name):
-            print("debug2")
+        
            
     
             Existing_characters[index1] = character(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2])
-            print(Existing_characters[index1])
-            print("debugger")
+
         
         if(index1 != len(Existing_characters)-1 ):
             UpdatedCharacter_list += Existing_characters[index1].__repr__()
             UpdatedCharacter_list += "\n"
         else:
-            print("debug3")
             
             UpdatedCharacter_list += Existing_characters[index1].__repr__()
             
             
-            print(UpdatedCharacter_list)
+ 
         index1  += 1
     Characters_text_file.write(UpdatedCharacter_list)
     Characters_text_file.close()
@@ -293,7 +280,7 @@ def Edit_displayed_character(stats):
     save_button.place(x=10,y=800)
     
     secondary_buttons_andor_elements = []
-    print(stats)
+   
     stat_values = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age]
     name, origin, background, social_class, accuracy, communication, constitution, dexterity, fighting, intelligence, perception, strength, willpower, age = tk.Text(window, height=1,width=10), tk.Text(window, height=1,width=10),tk.Text(window, height=1,width=12), tk.Text(window, height=1,width=12), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=2), tk.Text(window, height=1,width=6)
     
@@ -657,7 +644,6 @@ def display_background_options(text):
 
 def display_Save_Character_Button_and_Save_Choice(Current_Score):
     global window_elements, current_character_being_made, background_set
-    print(current_character_being_made)
     Save_Character_Button = Button(window, bg="#424242", fg = "#E6E6E6",text="Save Character",font=("Arial", 10),command=lambda:save_character())
     Save_Character_Button.pack()
     Save_Character_Button.place(x=390,y=450)
@@ -691,7 +677,6 @@ def save_character():
     old_characters_text = ""
     old_characters = open("TheExpanseCharacterCreator.txt", "r")
     counter = 0
-    print(current_character_being_made)
     for index in current_character_being_made:
         if counter == len(current_character_being_made)-1:
             current_character_to_string += str(index)
