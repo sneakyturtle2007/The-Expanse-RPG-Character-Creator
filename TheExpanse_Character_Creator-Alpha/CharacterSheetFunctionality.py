@@ -1,5 +1,6 @@
 #IMPORTS
 import os
+
 try:
     import shutil
 except ImportError:
@@ -28,3 +29,12 @@ except ImportError:
     import subprocess
     subprocess.call(['pip', 'install', 'lorem'])
     import lorem
+
+def diceroll():
+    print("test")
+
+def settingUp_Interactables(window,elements,fortune):
+    
+    print("temp")
+    return elements,fortune
+    

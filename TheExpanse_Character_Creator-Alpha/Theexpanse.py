@@ -33,6 +33,7 @@ from CharacterClass import character
 
 from GenericFunctions_MainMenu_CharacterMaker import *
 
+from CharacterSheetFunctionality import *
 # Program Variables
 
 currently_making_character = False
@@ -46,7 +47,7 @@ Existing_characters = []
 current_character_cards = []
 current_characeter_image_path = ""
 current_character_being_made = []
-
+Fortune = 0
 displaying_character_background_constant = (Image.open("images\\Character_Sheet_1.jpg").width,900)
 accuracy = StringVar(window)
 communication = StringVar(window)
@@ -118,7 +119,7 @@ def display_characters(characters, current_character_cards ,Existing_characters_
         
         
 def display_character_ClickedOn(ifbackpage,stats):
-    global window_elements,displaying_character_background_constant,secondary_buttons_andor_elements
+    global window_elements,displaying_character_background_constant,secondary_buttons_andor_elements,Fortune
     
     height = window.winfo_screenheight()
    
@@ -195,19 +196,25 @@ def display_character_ClickedOn(ifbackpage,stats):
 
         next_button = Button(window, bg="#424242", fg="#E6E6E6", text="Next", font=("Arial", 10),
                      command=lambda: display_character_ClickedOn("True", stats))
-
+        
+        
+        secondary_buttons_andor_elements, Fortune= settingUp_Interactables(window,secondary_buttons_andor_elements,Fortune)
+        
         next_button.pack() 
         back_button.pack()
         edit_button.pack()
+        
         
         back_button.place(x=10,y=10)
         next_button.place(x=500,y=800)
         edit_button.place(x=10,y=800)
         
+        
         window_elements.append(background)
         secondary_buttons_andor_elements.append(next_button)
         secondary_buttons_andor_elements.append(back_button)
         secondary_buttons_andor_elements.append(edit_button)
+        
         
              
 def display_stats(stats):
