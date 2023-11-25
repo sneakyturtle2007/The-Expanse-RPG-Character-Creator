@@ -40,19 +40,19 @@ window.title("Character Creator by: Luis Alejandro Blake")
 canvas = Canvas( window ,bg = "#212121" , height="500", width="500")
 canvas.pack()
 
-#PROGRAM VARIABLES
+
 
 
 
 def convert_to_die_roll(ability_score):
     ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]
-    print("\n\n\nConverting to die roll: \n ------------------ \n")
+    
     for range_and_score in ability_score_table:
         if(ability_score == range_and_score[1]):
             print("ability score : " , ability_score , "\n")
             
             print("number of that score: " , range_and_score[0][0], "\n")
-            print("Done converting to die roll: \n ------------------ \n")
+            
             return range_and_score[0][0]
     print("ERROR: ability score not found\n\n\n")
    

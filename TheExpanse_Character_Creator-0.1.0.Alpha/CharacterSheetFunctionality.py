@@ -33,7 +33,8 @@ except ImportError:
 def diceroll():
     print("test")
     
-def adding_subtracting_Fortune():
+def adding_subtracting_Fortune(elements,fortune):
+    
     print("temp")
     
 def Visual_fortune_points(window,fortune,canvas):
@@ -48,6 +49,7 @@ def Visual_fortune_points(window,fortune,canvas):
                 canvas.create_rectangle(x_square, y_square, x_square+side_length, y_square+side_length,fill="blue")
             else:
                 canvas.create_rectangle(x_square, y_square, x_square+side_length, y_square+side_length,fill="white")
+                
 def FortunePointsInteractable(window,fortune,canvas):
     Visual_fortune_points(window,fortune,canvas)
     print("temp")
