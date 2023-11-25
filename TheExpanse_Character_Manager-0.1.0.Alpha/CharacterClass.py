@@ -17,7 +17,7 @@ class character:
         self.origin = self.set_origin(origin)
         self.social_class = self.set_social_class(social_class)
         self.background = self.set_background(background)
-        self.fortune = fortune
+        self.fortune = int(fortune)
     
     def set_ability_score(self,ability_score):
         self.ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]

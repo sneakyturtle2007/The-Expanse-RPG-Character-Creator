@@ -1,9 +1,10 @@
 #IMPORTS
 import os
+import subprocess
 try:
     import shutil
 except ImportError:
-    import subprocess
+    
     subprocess.call(['pip', 'install', 'shutil'])
     import shutil
 try:
@@ -11,7 +12,7 @@ try:
     from tkinter import *
     from tkinter import filedialog
 except ImportError:
-    import subprocess
+    
     subprocess.call(['pip', 'install', 'tkinter'])
     import tkinter as tk
     from tkinter import *
@@ -19,13 +20,13 @@ except ImportError:
 try:
     from PIL import Image, ImageTk
 except ImportError:
-    import subprocess
+    
     subprocess.call(['pip', 'install', 'Pillow'])
     from PIL import Image
 try:
     import lorem
 except ImportError:
-    import subprocess
+    
     subprocess.call(['pip', 'install', 'lorem'])
     import lorem
 
@@ -33,7 +34,17 @@ from CharacterClass import character
 
 from GenericFunctions_MainMenu_CharacterMaker import *
 
-from CharacterSheetFunctionality import *
+
+
+
+
+window = Tk()
+window.geometry("500x500")
+window.resizable(False,False)
+window.title("Character Creator by: Luis Alejandro Blake")
+main_canvas = Canvas( window ,bg = "#212121" , height="500", width="500")
+main_canvas.pack()
+
 # Program Variables
 
 currently_making_character = False
@@ -76,9 +87,9 @@ def create_character_card(image_path,x,y, parameters,name):
     resized_image = img.resize((90, 80), Image.NEAREST)
     image = ImageTk.PhotoImage(resized_image)
 
-    card_id = canvas.create_image(x, y, image=image, anchor=tk.NW)
+    card_id = main_canvas.create_image(x, y, image=image, anchor=tk.NW)
     
-    canvas.tag_bind(card_id, "<Button-1>", lambda card_item=(card_id, image, parameters) : display_character_ClickedOn("False",parameters))#event,
+    main_canvas.tag_bind(card_id, "<Button-1>", lambda card_item=(card_id, image, parameters) : display_character_ClickedOn("False",parameters))
     character_name_label = tk.Label(window, text = name, bg="#212121", fg = "#E6E6E6",font=("Arial", 10))
     character_name_label.pack()
     character_name_label.place(x= x+(35-(len(name)*3)), y = y+80)
@@ -92,13 +103,14 @@ def display_characters(characters, current_character_cards ,Existing_characters_
         element.destroy()
     for element in secondary_buttons_andor_elements:
         element.destroy()
-        
+    main_canvas.delete("all")
+    
     Existing_characters = Existing_characters_current
     window_elements = []
     index = 0
     increment = 40
 
-    canvas.config(width=500,height=500)
+    main_canvas.config(width=500,height=500)
     window.geometry("500x500")
     
     
@@ -116,19 +128,16 @@ def display_characters(characters, current_character_cards ,Existing_characters_
     window_elements.append(Add_characer_button)    
                 
 def display_character_ClickedOn(ifbackpage,stats):
-    global window_elements,displaying_character_background_constant,secondary_buttons_andor_elements,Fortune
+    global window_elements,displaying_character_background_constant,secondary_buttons_andor_elements
     
     height = window.winfo_screenheight()
    
     window.attributes("-topmost", True)
-
+    for elements in window_elements:
+        elements.destroy()
+    
     if ifbackpage == "True":
-        
-        for elements in window_elements:
-            elements.destroy()
-        for element in secondary_buttons_andor_elements:
-            elements.destroy()
-            
+
         window_elements = []
         
         character_sheet = Image.open("images\\Character_Sheet_2.jpg")
@@ -138,14 +147,13 @@ def display_character_ClickedOn(ifbackpage,stats):
         geometry_text = str(displaying_character_background_constant[0]-10) + "x" + str(height)
         
         window.geometry(geometry_text)
-        canvas.config(width=displaying_character_background_constant[0],height=height)
+        main_canvas.config(width=displaying_character_background_constant[0],height=height)
         
         background = tk.Label(window,image=character_sheet_background)
         background.image = character_sheet_background
         background.pack()
         background.place(x=-20,y=0)
-        
-        
+
         #display_stats(stats)
         back_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:display_character_ClickedOn("False",stats))
         edit_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Edit",font=("Arial", 10),command=lambda:Edit_displayed_character(stats))
@@ -156,14 +164,8 @@ def display_character_ClickedOn(ifbackpage,stats):
         window_elements.append(background) 
         secondary_buttons_andor_elements.append(back_button)
         
-        
     else: 
-        
-        for element in window_elements:
-            element.destroy()
-            
-        canvas.delete("all")
-        
+
         window_elements = []
         
         character_sheet = Image.open("images\\Character_Sheet_1.jpg")
@@ -173,17 +175,18 @@ def display_character_ClickedOn(ifbackpage,stats):
         geometry_text = str(displaying_character_background_constant[0]) + "x" + str(displaying_character_background_constant[1])
         
         window.geometry(geometry_text)
-        canvas.config(width=character_sheet.width,height=displaying_character_background_constant[1])
+        main_canvas.config(width=character_sheet.width,height=displaying_character_background_constant[1])
         
         background = tk.Label(window,image=character_sheet_background)
         background.image = character_sheet_background
         background.pack()
         background.place(x=-20,y=0)
-        
-        
+
         display_stats(stats)
         
         characters = get_characters()
+        
+        settingUp_Interactables()
         
         back_button = Button(window, bg="#424242", fg="#E6E6E6", text="Back", font=("Arial", 10),
                      command=lambda: display_characters(*characters))
@@ -195,22 +198,22 @@ def display_character_ClickedOn(ifbackpage,stats):
                      command=lambda: display_character_ClickedOn("True", stats))
         
         
-        secondary_buttons_andor_elements, Fortune= settingUp_Interactables(window,secondary_buttons_andor_elements,Fortune,canvas)
-        
         next_button.pack() 
         back_button.pack()
         edit_button.pack()
-        
         
         back_button.place(x=10,y=10)
         next_button.place(x=500,y=800)
         edit_button.place(x=10,y=800)
         
+        print("THIS IS A TEST")
         
         window_elements.append(background)
         secondary_buttons_andor_elements.append(next_button)
         secondary_buttons_andor_elements.append(back_button)
         secondary_buttons_andor_elements.append(edit_button)
+
+
                       
 def display_stats(stats):
     global secondary_buttons_andor_elements
@@ -391,6 +394,14 @@ def Edit_displayed_character(stats):
     secondary_buttons_andor_elements.append(age)
     secondary_buttons_andor_elements.append(back_button)
     secondary_buttons_andor_elements.append(save_button)
+#FUNCTIONS FOR CHARACTER SHEET FUNCTIONALITY
+
+def settingUp_Interactables():
+    
+    test = Button(window, bg="#424242", fg="#E6E6E6", text="Back", font=("Arial", 10))
+    
+    test.pack()
+    test.place(x= 100, y = 100)
 
 #FUNCTIONS FOR CHARACTER CREATION
 
@@ -401,7 +412,7 @@ def display_charactermaker():
     for element in window_elements:
         element.destroy()
         
-    canvas.delete("all")
+    main_canvas.delete("all")
     
     window_elements = []
     
@@ -492,7 +503,7 @@ def stat_setter():
     stats = [accuracy, communication, constitution, dexterity, fighting,intelligence, perception, strength, willpower]
     
     window.geometry("500x500")
-    canvas.config(width=500,height=500)
+    main_canvas.config(width=500,height=500)
 
     for index in window_elements:
         if isinstance(index,Text):
@@ -510,7 +521,7 @@ def stat_setter():
                 element.destroy()
                 
         window_elements = []
-        canvas.delete("all")
+        main_canvas.delete("all")
         
         location = 0
         increment= 70
@@ -543,7 +554,7 @@ def stat_setter():
         window_elements.append(done_button)
       
 def origin_setter():
-    global accuracy, communication,constitution, dexterity, fighting, intelligence, perception, strength, willpower,window_elements,window,canvas, if_stats_set
+    global accuracy, communication,constitution, dexterity, fighting, intelligence, perception, strength, willpower,window_elements,window,main_canvas, if_stats_set
     stats = [accuracy, communication, constitution, dexterity, fighting,intelligence, perception, strength, willpower]
     ifanystatsareempty = False 
     
@@ -552,7 +563,7 @@ def origin_setter():
             ifanystatsareempty = True
     if ifanystatsareempty != True:
         window.geometry("1500x700")
-        canvas.config(width=2000,height=1000)
+        main_canvas.config(width=2000,height=1000)
         if if_stats_set:
             index = 5
             for stat in stats:

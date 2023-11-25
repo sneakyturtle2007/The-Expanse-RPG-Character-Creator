@@ -33,17 +33,6 @@ from CharacterClass import character
 
 #WINDOW AND CANVAS
 
-window = Tk()
-window.geometry("500x500")
-window.resizable(False,False)
-window.title("Character Creator by: Luis Alejandro Blake")
-canvas = Canvas( window ,bg = "#212121" , height="500", width="500")
-canvas.pack()
-
-
-
-
-
 def convert_to_die_roll(ability_score):
     ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]
     
