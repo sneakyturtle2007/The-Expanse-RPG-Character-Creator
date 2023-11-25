@@ -3,8 +3,8 @@
  Pre_Alpha-
   - Basic stats editable  
   - Can make characters
-  
- Alpha 0.1.0-
+
+ 0.1.0.Alpha -
   - Active character sheet
   - Dice roller
     
