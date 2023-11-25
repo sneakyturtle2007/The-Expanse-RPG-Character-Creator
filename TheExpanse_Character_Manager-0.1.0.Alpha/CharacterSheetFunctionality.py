@@ -1,6 +1,5 @@
 #IMPORTS
 import os
-
 try:
     import shutil
 except ImportError:
