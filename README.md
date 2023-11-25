@@ -3,6 +3,9 @@
  Pre_Alpha-
   - Basic stats editable  
   - Can make characters
+ Alpha 0.1.0-
+  - Active character sheet
+  - Dice roller
     
 # Creators of The Expanse RPG: Green Ronin Publishing
 
