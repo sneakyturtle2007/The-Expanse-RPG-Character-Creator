@@ -34,6 +34,7 @@ from CharacterClass import character
 
 from GenericFunctions_MainMenu_CharacterMaker import *
 
+from CharacterSheetFunctionality import settingUp_Interactables
 
 
 
@@ -163,7 +164,6 @@ def display_character_ClickedOn(ifbackpage,stats):
         
         window_elements.append(background) 
         secondary_buttons_andor_elements.append(back_button)
-        
     else: 
 
         window_elements = []
@@ -186,7 +186,7 @@ def display_character_ClickedOn(ifbackpage,stats):
         
         characters = get_characters()
         
-        settingUp_Interactables()
+        settingUp_Interactables(*window)
         
         back_button = Button(window, bg="#424242", fg="#E6E6E6", text="Back", font=("Arial", 10),
                      command=lambda: display_characters(*characters))
@@ -396,12 +396,7 @@ def Edit_displayed_character(stats):
     secondary_buttons_andor_elements.append(save_button)
 #FUNCTIONS FOR CHARACTER SHEET FUNCTIONALITY
 
-def settingUp_Interactables():
-    
-    test = Button(window, bg="#424242", fg="#E6E6E6", text="Back", font=("Arial", 10))
-    
-    test.pack()
-    test.place(x= 100, y = 100)
+
 
 #FUNCTIONS FOR CHARACTER CREATION
 
