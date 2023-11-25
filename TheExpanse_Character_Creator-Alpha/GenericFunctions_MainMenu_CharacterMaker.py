@@ -46,7 +46,7 @@ canvas.pack()
 
 def convert_to_die_roll(ability_score):
     ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]
-    print("Converting to die roll: \n ------------------ \n")
+    print("\n\n\nConverting to die roll: \n ------------------ \n")
     for range_and_score in ability_score_table:
         if(ability_score == range_and_score[1]):
             print("ability score : " , ability_score , "\n")
@@ -65,7 +65,7 @@ def get_characters():
     for image in os.listdir("images\\"):
         
         if(str(image) != "noimage.jpg" and str(image) != "photo1.jpg" and str(image) != "Belter.jpg" and str(image) != "TheExpanse-Earther.jpg" and str(image) != "Martian.jpg" and str(image) != "Character_Sheet_1.jpg" and str(image) != "Character_Sheet_2.jpg"):
-            print("finding characters-")
+           
             current_character = []
             current_character.append(str(image))
             
@@ -73,15 +73,12 @@ def get_characters():
                 characters2 = characters_text.readlines()
                 
                 Character = characters2[index].split(",")
-                print("\n")
-                print("Transparency test" , Character )
-                print("\n")
+                
                
-                temp_character = character(Character[0],Character[1],Character[2],Character[3],Character[4],convert_to_die_roll(int(Character[5])),convert_to_die_roll(int(Character[6])),convert_to_die_roll(int(Character[7])),convert_to_die_roll(int(Character[8])),convert_to_die_roll(int(Character[9])),convert_to_die_roll(int(Character[10])),convert_to_die_roll(int(Character[11])),convert_to_die_roll(int(Character[12])),convert_to_die_roll(int(Character[13])),Character[14],Character[15],Character[16])
+                temp_character = character(Character[0],Character[1],Character[2],Character[3],Character[4],convert_to_die_roll(int(Character[5])),convert_to_die_roll(int(Character[6])),convert_to_die_roll(int(Character[7])),convert_to_die_roll(int(Character[8])),convert_to_die_roll(int(Character[9])),convert_to_die_roll(int(Character[10])),convert_to_die_roll(int(Character[11])),convert_to_die_roll(int(Character[12])),convert_to_die_roll(int(Character[13])),Character[14],Character[15],Character[16],Character[17])
 
                 Existing_characters_current.append(temp_character)
-                print(temp_character)
-                print(Character)
+             
                 current_character.append(Character[0])
             characters.append(current_character)
             

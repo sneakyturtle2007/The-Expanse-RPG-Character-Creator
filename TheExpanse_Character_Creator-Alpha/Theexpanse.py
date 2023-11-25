@@ -70,7 +70,6 @@ willpower.set("")
 
 #FUNCTIONS
 
-
 def create_character_card(image_path,x,y, parameters,name):
     
     img = Image.open(image_path)
@@ -86,7 +85,6 @@ def create_character_card(image_path,x,y, parameters,name):
     
     return character_name_label
     
-
 def display_characters(characters, current_character_cards ,Existing_characters_current):#current_character_cards is not used in this function, but is needed to prevent error because the get_characters function returns current_character_cards
     global window_elements,secondary_buttons_andor_elements,Existing_characters
     
@@ -116,8 +114,7 @@ def display_characters(characters, current_character_cards ,Existing_characters_
     Add_characer_button.pack()
     Add_characer_button.place(x=380,y=440)
     window_elements.append(Add_characer_button)    
-        
-        
+                
 def display_character_ClickedOn(ifbackpage,stats):
     global window_elements,displaying_character_background_constant,secondary_buttons_andor_elements,Fortune
     
@@ -198,7 +195,7 @@ def display_character_ClickedOn(ifbackpage,stats):
                      command=lambda: display_character_ClickedOn("True", stats))
         
         
-        secondary_buttons_andor_elements, Fortune= settingUp_Interactables(window,secondary_buttons_andor_elements,Fortune)
+        secondary_buttons_andor_elements, Fortune= settingUp_Interactables(window,secondary_buttons_andor_elements,Fortune,canvas)
         
         next_button.pack() 
         back_button.pack()
@@ -214,16 +211,14 @@ def display_character_ClickedOn(ifbackpage,stats):
         secondary_buttons_andor_elements.append(next_button)
         secondary_buttons_andor_elements.append(back_button)
         secondary_buttons_andor_elements.append(edit_button)
-        
-        
-             
+                      
 def display_stats(stats):
     global secondary_buttons_andor_elements
     stat_locations = [(60,64),(65,93),(93,124),(92,152),
                       (260,250),(260,291),(260,334),(260,375),(260,416),(260,459),(260,502),(260,544),(260,585),
-                      (310,40)]
+                      (340,40),(440, 40),(540,40)]
 
-    stat_values = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age]#,stats.height,stats.weight,stats.personality
+    stat_values = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight]#,stats.personality
     index = 0
     for values in stat_values:
         
@@ -239,15 +234,14 @@ def display_stats(stats):
         secondary_buttons_andor_elements.append(stat_label)
         
         index += 1
-
-    
+   
 def save_displayed_character(stats):
     global secondary_buttons_andor_elements,Existing_characters
     
     UpdatedCharacter_list = ""
-    current_character_stats = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality]
+    current_character_stats = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality,stats.fortune]
     index1 = 0
-   
+    print(stats.fortune)
     for elements in secondary_buttons_andor_elements:
         
         if isinstance(elements,Text):
@@ -265,8 +259,8 @@ def save_displayed_character(stats):
     
     for characters in Existing_characters:
         if(characters.name == stats.name):
-        
-            Existing_characters[index1] = character(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2])
+            print(current_character_stats[17])
+            Existing_characters[index1] = character(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17])
             
         if(index1 != len(Existing_characters)-1 ):
             
@@ -281,9 +275,8 @@ def save_displayed_character(stats):
     Characters_text_file.write(UpdatedCharacter_list)
     Characters_text_file.close()
     
-    display_character_ClickedOn("False", character(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2]))
+    display_character_ClickedOn("False", character(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17]))
     
-
 def Edit_displayed_character(stats):
     global secondary_buttons_andor_elements,window_elements
     stat_locations = [(60,64),(65,93),(93,124),(92,152),
@@ -399,7 +392,6 @@ def Edit_displayed_character(stats):
     secondary_buttons_andor_elements.append(back_button)
     secondary_buttons_andor_elements.append(save_button)
 
-
 #FUNCTIONS FOR CHARACTER CREATION
 
 def display_charactermaker():
@@ -491,13 +483,14 @@ def display_charactermaker():
             if isinstance(element,Text):
                 element.insert("end-1c", current_character_being_made[index])
                 index += 1
-      
-        
+              
 def stat_setter():
     global accuracy, communication, constitution, dexterity, fighting, intelligence, perception, strength,willpower, window_elements,current_character_being_made,current_characeter_image_path
     
-    stats, stats_text, ifanyinformationempty = [accuracy, communication, constitution, dexterity, fighting,intelligence, perception, strength, willpower], ["Accuracy", "Comm.", "Constitution", "Dexterity", "Fighting","Intelligence", "Perception", "Strength", "Willpower"], False
-
+    stats_text = ["Accuracy", "Comm.", "Constitution", "Dexterity", "Fighting","Intelligence", "Perception", "Strength", "Willpower"]
+    ifanyinformationempty = False
+    stats = [accuracy, communication, constitution, dexterity, fighting,intelligence, perception, strength, willpower]
+    
     window.geometry("500x500")
     canvas.config(width=500,height=500)
 
@@ -548,8 +541,7 @@ def stat_setter():
         
         window_elements.append(back_button)
         window_elements.append(done_button)
-   
-   
+      
 def origin_setter():
     global accuracy, communication,constitution, dexterity, fighting, intelligence, perception, strength, willpower,window_elements,window,canvas, if_stats_set
     stats = [accuracy, communication, constitution, dexterity, fighting,intelligence, perception, strength, willpower]
@@ -611,8 +603,7 @@ def origin_setter():
         back_button.pack()
         back_button.place(x=20,y=10)    
         window_elements.append(back_button)
-    
-    
+       
 def origin_stat_setter(image_name):
     global if_origin_already_set
     if(if_origin_already_set != True):
@@ -632,7 +623,6 @@ def origin_stat_setter(image_name):
             current_character_being_made[14] = "5"
     social_class_setter_and_Background_setter()
     
-
 def social_class_setter_and_Background_setter():
     global window_elements
     for elements in window_elements:
@@ -662,8 +652,7 @@ def social_class_setter_and_Background_setter():
     back_button.pack()
     back_button.place(x=20,y=10)
     window_elements.append(back_button)
-
-        
+   
 def display_background_options(text):
     global secondary_buttons_andor_elements,socialClass_set,current_character_being_made
     for elements in secondary_buttons_andor_elements:
@@ -748,7 +737,6 @@ def display_background_options(text):
             current_character_being_made.append("12")
             socialClass_set = True
 
-
 def display_Save_Character_Button_and_Save_Choice(Current_Score):
     global window_elements, current_character_being_made, background_set
     Save_Character_Button = Button(window, bg="#424242", fg = "#E6E6E6",text="Save Character",font=("Arial", 10),command=lambda:save_character())
@@ -760,8 +748,7 @@ def display_Save_Character_Button_and_Save_Choice(Current_Score):
     else:
         current_character_being_made.append(Current_Score)
         background_set = True
-        
-
+    
 def choose_image():
     global current_characeter_image_path
     file_path = filedialog.askopenfilename(filetypes=[("Image files", "*.png *.jpg *.jpeg *.gif")])
@@ -773,11 +760,9 @@ def choose_image():
         window_elements[0].config(image=photo)
         window_elements[0].image = photo
 
- 
 def save_image(image_path):
     destination_path = os.path.join("images", os.path.basename(image_path))
     shutil.copy(image_path, destination_path)
-
 
 def save_character():
     current_character_to_string = ""
@@ -808,7 +793,6 @@ def save_character():
         Characters.close() 
         display_characters(get_characters())
         
-    
 #MAIN PROGRAM
 
 characters, current_character_cards, Existing_characters = get_characters()

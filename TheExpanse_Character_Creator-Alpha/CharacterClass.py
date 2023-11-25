@@ -1,5 +1,5 @@
 class character:
-    def __init__(self,name,height,weight,age,personality,accuracy, communication,constitution,dexterity,fighting,intelligence,perception,strength,willpower,origin,social_class,background):
+    def __init__(self,name,height,weight,age,personality,accuracy, communication,constitution,dexterity,fighting,intelligence,perception,strength,willpower,origin,social_class,background,fortune):
         self.name = name
         self.age = age
         self.height = height
@@ -17,6 +17,7 @@ class character:
         self.origin = self.set_origin(origin)
         self.social_class = self.set_social_class(social_class)
         self.background = self.set_background(background)
+        self.fortune = fortune
     
     def set_ability_score(self,ability_score):
         self.ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]
@@ -110,5 +111,5 @@ class character:
                         return background_score[1][0]
             
     def __repr__(self): 
-        return self.name+ "," + self.age+ "," +self.height + "," +self.weight + "," +self.personality + "," +  str(self.accuracy) + "," + str(self.communication) + "," + str(self.constitution) + "," + str(self.dexterity) + "," + str(self.fighting) + "," + str(self.intelligence) + "," + str(self.perception) + "," + str(self.strength) + "," +str(self.willpower) + "," + self.origin + "," + self.social_class + "," + self.background
+        return self.name+ "," + self.age+ "," +self.height + "," +self.weight + "," +self.personality + "," +  str(self.accuracy) + "," + str(self.communication) + "," + str(self.constitution) + "," + str(self.dexterity) + "," + str(self.fighting) + "," + str(self.intelligence) + "," + str(self.perception) + "," + str(self.strength) + "," +str(self.willpower) + "," + self.origin + "," + self.social_class + "," + self.background + "," + str(self.fortune)
    
