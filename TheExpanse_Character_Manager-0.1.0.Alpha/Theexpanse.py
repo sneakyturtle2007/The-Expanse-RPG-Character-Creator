@@ -392,16 +392,26 @@ def Edit_displayed_character(stats):
     secondary_buttons_andor_elements.append(age)
     secondary_buttons_andor_elements.append(back_button)
     secondary_buttons_andor_elements.append(save_button)
+
 #FUNCTIONS FOR CHARACTER SHEET FUNCTIONALITY
 
 def settingUp_Interactables():
     print("temp")
     fortuneSystem()
 
-def fortuneSystem():
-    fortuneBoxes_and_Buttons()
+def fortuneSystem(fortune):
+    global main_canvas, window_elements, secondary_buttons_andor_elements
+    print("temp")
+    fortune_box_x = 2
+    fortune_box_y = 20
+    fortune_box_side_length = 80
+    for row in range(1, 30):
+        for column in range(1,30):
+            if row * column <= fortune:
+                fortune_box = main_canvas.create_rectangle(20, 20, 100, 100, fill="blue")
+                
     
-def fortuneBoxes_and_Buttons():
+def fortune_boxes_and_buttons():
     print("temp")
     
 def adding_or_subtracting_fortune():
