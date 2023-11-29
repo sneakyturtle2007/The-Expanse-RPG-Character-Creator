@@ -211,8 +211,6 @@ def display_character_ClickedOn(ifbackpage,stats):
         secondary_buttons_andor_elements.append(next_button)
         secondary_buttons_andor_elements.append(back_button)
         secondary_buttons_andor_elements.append(edit_button)
-
-
                       
 def display_stats(stats):
     global secondary_buttons_andor_elements
@@ -439,8 +437,6 @@ def fortuneSystem():
     secondary_buttons_andor_elements.append(minus_1_button)
     secondary_buttons_andor_elements.append(minus_10_button)
     
-    
-    
 def fortuneSystemUpdate(fortune):
     global fortune_boxes, Fortune
     Fortune = fortune
@@ -531,7 +527,9 @@ def display_charactermaker():
     personality.place(x=90,y=360)
     window_elements.append(personality)
     
-    back_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:display_characters(current_character_cards))           
+    parameters = get_characters()
+    back_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:display_characters(*parameters)) 
+              
     back_button.pack()
     back_button.place(x=20,y=20)
     window_elements.append(back_button)
