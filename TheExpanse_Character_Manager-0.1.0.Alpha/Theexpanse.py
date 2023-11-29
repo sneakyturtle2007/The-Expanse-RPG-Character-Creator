@@ -57,6 +57,7 @@ Existing_characters = []
 current_character_cards = []
 current_characeter_image_path = ""
 current_character_being_made = []
+fortune_boxes = []
 Fortune = 0
 displaying_character_background_constant = (Image.open("images\\Character_Sheet_1.jpg").width,900)
 accuracy = StringVar(window)
@@ -396,26 +397,29 @@ def Edit_displayed_character(stats):
 #FUNCTIONS FOR CHARACTER SHEET FUNCTIONALITY
 
 def settingUp_Interactables():
-    print("temp")
+    print("\n settingUp_Interactables \n")
     fortuneSystem()
 
 def fortuneSystem(fortune):
-    global main_canvas, window_elements, secondary_buttons_andor_elements
-    print("temp")
-    fortune_box_x = 2
-    fortune_box_y = 20
-    fortune_box_side_length = 80
+    global main_canvas, window_elements, secondary_buttons_andor_elements, fortune_boxes
+    print("\n fortuneSystem \n")
+    fortune_box_x = 600
+    fortune_box_y = 540
+    fortune_box_side_length = 2
+    
     for row in range(1, 30):
         for column in range(1,30):
             if row * column <= fortune:
-                fortune_box = main_canvas.create_rectangle(20, 20, 100, 100, fill="blue")
-                
+                fortune_boxes.append( main_canvas.create_rectangle(fortune_box_x, fortune_box_y, (fortune_box_x + fortune_box_side_length), (fortune_box_y + fortune_box_side_length), fill="blue"))
+            else:
+                fortune_boxes.append(main_canvas.create_rectangle(fortune_box_x, fortune_box_y, (fortune_box_x + fortune_box_side_length), (fortune_box_y + fortune_box_side_length), fill="white"))
+        
     
-def fortune_boxes_and_buttons():
-    print("temp")
+def fortuneSystemUpdate(fortune):
+    print("\n fortuneSystemUpdate \n")
     
 def adding_or_subtracting_fortune():
-    print("temp")
+    print("\n adding_or_subtracting_fortune \n")
     
 #FUNCTIONS FOR CHARACTER CREATION
 
