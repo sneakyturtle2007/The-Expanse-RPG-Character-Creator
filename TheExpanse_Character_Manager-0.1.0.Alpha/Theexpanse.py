@@ -37,11 +37,11 @@ from GenericFunctions_MainMenu_CharacterMaker import *
 
 
 
-window = Tk()
+window = tk.Tk()
 window.geometry("500x500")
 window.resizable(False,False)
 window.title("Character Creator by: Luis Alejandro Blake")
-main_canvas = Canvas( window ,bg = "#212121" , height="500", width="500")
+main_canvas = tk.Canvas( window ,bg = "#212121" , height="500", width="500")
 main_canvas.pack()
 
 # Program Variables
@@ -58,7 +58,7 @@ current_character_cards = []
 current_characeter_image_path = ""
 current_character_being_made = []
 fortune_boxes = []
-Fortune = 0
+Fortune = 50
 displaying_character_background_constant = (Image.open("images\\Character_Sheet_1.jpg").width,900)
 accuracy = StringVar(window)
 communication = StringVar(window)
@@ -400,23 +400,57 @@ def settingUp_Interactables():
     print("\n settingUp_Interactables \n")
     fortuneSystem()
 
-def fortuneSystem(fortune):
-    global main_canvas, window_elements, secondary_buttons_andor_elements, fortune_boxes
+def fortuneSystem():
+    global window_elements, secondary_buttons_andor_elements, fortune_boxes,Fortune
     print("\n fortuneSystem \n")
-    fortune_box_x = 600
-    fortune_box_y = 540
-    fortune_box_side_length = 2
-    
-    for row in range(1, 30):
-        for column in range(1,30):
-            if row * column <= fortune:
-                fortune_boxes.append( main_canvas.create_rectangle(fortune_box_x, fortune_box_y, (fortune_box_x + fortune_box_side_length), (fortune_box_y + fortune_box_side_length), fill="blue"))
+    start_x = 10
+    start_y = 10
+    box_size = 50
+    spacing = 10
+
+    box_y = start_y
+    for row in range(29):
+        box_x = start_x
+        for column in range(2):
+            if row * column <= Fortune:
+                box = main_canvas.create_rectangle(box_x, box_y, box_x + box_size, box_y + box_size, fill="red")
             else:
-                fortune_boxes.append(main_canvas.create_rectangle(fortune_box_x, fortune_box_y, (fortune_box_x + fortune_box_side_length), (fortune_box_y + fortune_box_side_length), fill="white"))
-        
+                box = main_canvas.create_rectangle(box_x, box_y, box_x + box_size, box_y + box_size, fill="green")
+            fortune_boxes.append(box)
+            print(f"Created rectangle at ({box_x}, {box_y})")
+            box_x += box_size + spacing
+        box_y += box_size + spacing
+
+    main_canvas.pack()
+    plus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="+1", font=("Arial", 10), command=lambda: fortuneSystemUpdate((Fortune + 1)))
+    plus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="+10", font=("Arial", 10), command=lambda: fortuneSystemUpdate((Fortune + 10)))
+    minus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="-1", font=("Arial", 10), command=lambda: fortuneSystemUpdate((Fortune - 1)))
+    minus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="-10", font=("Arial", 10), command=lambda: fortuneSystemUpdate((Fortune - 10)))
+    plus_1_button.pack()
+    plus_10_button.pack()
+    minus_1_button.pack()
+    minus_10_button.pack()
+    plus_1_button.place(x=600, y=600)
+    plus_10_button.place(x=650, y=600)
+    minus_1_button.place(x=600, y=650)
+    minus_10_button.place(x=650, y=650)
+    secondary_buttons_andor_elements.append(plus_1_button)
+    secondary_buttons_andor_elements.append(plus_10_button)
+    secondary_buttons_andor_elements.append(minus_1_button)
+    secondary_buttons_andor_elements.append(minus_10_button)
+    
+    
     
 def fortuneSystemUpdate(fortune):
-    print("\n fortuneSystemUpdate \n")
+    global fortune_boxes, Fortune
+    Fortune = fortune
+    index = 0
+    for box in fortune_boxes:
+        if index <= fortune:
+            box.config(fill="blue")
+        else:
+            box.config(fill="white")
+            
     
 def adding_or_subtracting_fortune():
     print("\n adding_or_subtracting_fortune \n")
