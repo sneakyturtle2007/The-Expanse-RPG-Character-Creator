@@ -58,7 +58,7 @@ current_character_cards = []
 current_characeter_image_path = ""
 current_character_being_made = []
 fortune_boxes = []
-Fortune = 50
+Fortune = 0
 displaying_character_background_constant = (Image.open("images\\Character_Sheet_1.jpg").width,900)
 accuracy = StringVar(window)
 communication = StringVar(window)
@@ -95,6 +95,43 @@ def create_character_card(image_path,x,y, parameters,name):
     character_name_label.place(x= x+(35-(len(name)*3)), y = y+80)
     
     return character_name_label
+
+def save_character_interactables(stats):
+    current_character_stats = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality,Fortune]
+    index1 = 0
+    for stat in current_character_stats:
+        
+        if index1 > 3 and index1 < 13:
+            current_character_stats[index1] = convert_to_die_roll(int(stat))
+        else:
+            current_character_stats[index1] = stat
+        
+        index1 += 1
+
+    
+ 
+    Characters_text_file = open("TheExpanseCharacterCreator.txt", "w")
+    UpdatedCharacter_list = ""
+    index1 = 0
+    for characters in Existing_characters:
+        if(characters.name == stats.name):
+            print(current_character_stats[17])
+            Existing_characters[index1] = character(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17])
+            print(Existing_characters[index1])
+        if(index1 != len(Existing_characters)-1 ):
+            
+            UpdatedCharacter_list += Existing_characters[index1].__repr__()
+            UpdatedCharacter_list += "\n"
+        else:
+            
+            UpdatedCharacter_list += Existing_characters[index1].__repr__()
+            
+        index1  += 1
+    print("just a test ")
+    Characters_text_file.write(UpdatedCharacter_list)
+    Characters_text_file.close()
+    characters, current_character_cards, Existing_characters_current = get_characters()
+    display_characters(characters, current_character_cards, Existing_characters_current)
     
 def display_characters(characters, current_character_cards ,Existing_characters_current):#current_character_cards is not used in this function, but is needed to prevent error because the get_characters function returns current_character_cards
     global window_elements,secondary_buttons_andor_elements,Existing_characters
@@ -179,12 +216,12 @@ def display_character_ClickedOn(ifbackpage,stats):
 
         display_stats(stats)
         
-        characters = get_characters()
         
-        settingUp_Interactables()
+        
+        settingUp_Interactables(stats)
         
         back_button = Button(window, bg="#424242", fg="#E6E6E6", text="Back", font=("Arial", 10),
-                     command=lambda: display_characters(*characters))
+                     command=lambda: save_character_interactables(stats))
 
         edit_button = Button(window, bg="#424242", fg="#E6E6E6", text="Edit", font=("Arial", 10),
                      command=lambda: Edit_displayed_character(stats))
@@ -390,13 +427,14 @@ def Edit_displayed_character(stats):
 
 #FUNCTIONS FOR CHARACTER SHEET FUNCTIONALITY
 
-def settingUp_Interactables():
+def settingUp_Interactables(stats):
     print("\n settingUp_Interactables \n")
-    fortuneSystem()
+    fortuneSystem(stats)
 
-def fortuneSystem():
+def fortuneSystem(stats):
     global window_elements, secondary_buttons_andor_elements,Fortune,fortune_boxes
     print("\n fortuneSystem \n")
+    Fortune = stats.fortune
     start_x = 675
     start_y = 598
     box_size_x = 11
