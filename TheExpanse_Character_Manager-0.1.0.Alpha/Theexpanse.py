@@ -99,6 +99,7 @@ def create_character_card(image_path,x,y, parameters,name):
 def save_character_interactables(stats):
     current_character_stats = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality,Fortune]
     index1 = 0
+    
     for stat in current_character_stats:
         
         if index1 > 3 and index1 < 13:
@@ -107,9 +108,7 @@ def save_character_interactables(stats):
             current_character_stats[index1] = stat
         
         index1 += 1
-
-    
- 
+        
     Characters_text_file = open("TheExpanseCharacterCreator.txt", "w")
     UpdatedCharacter_list = ""
     index1 = 0
@@ -499,9 +498,6 @@ def fortuneSystemUpdate(fortune):
             
             box_x += box_size_x + spacing
         box_y -= box_size_x + (spacing/2.6)
-    
-def adding_or_subtracting_fortune():
-    print("\n adding_or_subtracting_fortune \n")
     
 #FUNCTIONS FOR CHARACTER CREATION
 
