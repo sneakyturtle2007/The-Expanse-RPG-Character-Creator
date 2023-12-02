@@ -203,7 +203,7 @@ def display_characters(characters, current_character_cards ,Existing_characters_
     Add_characer_button.place(x=380,y=440)
     window_elements.append(Add_characer_button)    
    
-#FUNCTIONS FOR CHARACTER DISPLAYING
+#FUNCTIONS FOR DISPLAYING CHARACTER 
                 
 def display_character_ClickedOn(ifbackpage,stats):
     global window_elements,displaying_character_background_constant,secondary_buttons_andor_elements
