@@ -149,10 +149,7 @@ def display_character_ClickedOn(ifbackpage,stats):
         window.geometry(geometry_text)
         main_canvas.config(width=displaying_character_background_constant[0],height=height)
         
-        background = tk.Label(window,image=character_sheet_background)
-        background.image = character_sheet_background
-        background.pack()
-        background.place(x=-20,y=0)
+        main_canvas.create_image(-20,0, image= character_sheet_background,anchor= tk.NW)
 
         #display_stats(stats)
         back_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:display_character_ClickedOn("False",stats))
@@ -161,7 +158,7 @@ def display_character_ClickedOn(ifbackpage,stats):
         edit_button.pack()
         back_button.place(x=10,y=10)
         
-        window_elements.append(background) 
+        
         secondary_buttons_andor_elements.append(back_button)
     else: 
 
@@ -169,17 +166,16 @@ def display_character_ClickedOn(ifbackpage,stats):
         
         character_sheet = Image.open("images\\Character_Sheet_1.jpg")
         character_sheet_resized = character_sheet.resize((character_sheet.width+10,displaying_character_background_constant[1] + 10), Image.NEAREST)
-        character_sheet_background = ImageTk.PhotoImage(character_sheet_resized)
+        character_sheet_background1 = ImageTk.PhotoImage(character_sheet_resized)
         
         geometry_text = str(displaying_character_background_constant[0]) + "x" + str(displaying_character_background_constant[1])
         
         window.geometry(geometry_text)
+        
         main_canvas.config(width=character_sheet.width,height=displaying_character_background_constant[1])
         
-        background = tk.Label(window,image=character_sheet_background)
-        background.image = character_sheet_background
-        background.pack()
-        background.place(x=-20,y=0)
+        main_canvas.create_image(-20, 0, image=character_sheet_background1, anchor=tk.NW)
+        main_canvas.image = character_sheet_background1
 
         display_stats(stats)
         
@@ -207,7 +203,7 @@ def display_character_ClickedOn(ifbackpage,stats):
         
         print("THIS IS A TEST")
         
-        window_elements.append(background)
+        
         secondary_buttons_andor_elements.append(next_button)
         secondary_buttons_andor_elements.append(back_button)
         secondary_buttons_andor_elements.append(edit_button)
@@ -399,39 +395,43 @@ def settingUp_Interactables():
     fortuneSystem()
 
 def fortuneSystem():
-    global window_elements, secondary_buttons_andor_elements, fortune_boxes,Fortune
+    global window_elements, secondary_buttons_andor_elements,Fortune,fortune_boxes
     print("\n fortuneSystem \n")
-    start_x = 10
-    start_y = 10
-    box_size = 50
-    spacing = 10
+    start_x = 675
+    start_y = 598
+    box_size_x = 11
+    box_size_y = 11.5
+    spacing = 8.25
 
     box_y = start_y
-    for row in range(29):
+    fortune_index = 1
+    for row in range(30):
         box_x = start_x
-        for column in range(2):
-            if row * column <= Fortune:
-                box = main_canvas.create_rectangle(box_x, box_y, box_x + box_size, box_y + box_size, fill="red")
+        for column in range(3):
+            if fortune_index <= Fortune:
+                fortune_boxes.append(main_canvas.create_rectangle(box_x, box_y, box_x + box_size_x, box_y + box_size_y, fill="blue"))
+                
             else:
-                box = main_canvas.create_rectangle(box_x, box_y, box_x + box_size, box_y + box_size, fill="green")
-            fortune_boxes.append(box)
-            print(f"Created rectangle at ({box_x}, {box_y})")
-            box_x += box_size + spacing
-        box_y += box_size + spacing
+                fortune_boxes.append(main_canvas.create_rectangle(box_x, box_y, box_x + box_size_x, box_y + box_size_y, fill="white"))
+                
+            fortune_index += 1
+           
+            box_x += box_size_x + spacing
+        box_y -= box_size_x + (spacing/2.6)
 
-    main_canvas.pack()
-    plus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="+1", font=("Arial", 10), command=lambda: fortuneSystemUpdate((Fortune + 1)))
-    plus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="+10", font=("Arial", 10), command=lambda: fortuneSystemUpdate((Fortune + 10)))
-    minus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="-1", font=("Arial", 10), command=lambda: fortuneSystemUpdate((Fortune - 1)))
-    minus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="-10", font=("Arial", 10), command=lambda: fortuneSystemUpdate((Fortune - 10)))
+    
+    plus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="+1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 1)))
+    plus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="+10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 10)))
+    minus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="-1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 1)))
+    minus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="-10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 10)))
     plus_1_button.pack()
     plus_10_button.pack()
     minus_1_button.pack()
     minus_10_button.pack()
-    plus_1_button.place(x=600, y=600)
-    plus_10_button.place(x=650, y=600)
-    minus_1_button.place(x=600, y=650)
-    minus_10_button.place(x=650, y=650)
+    plus_1_button.place(x=683, y=147)
+    plus_10_button.place(x=703, y=147)
+    minus_1_button.place(x=684, y=166)
+    minus_10_button.place(x=704, y=166)
     secondary_buttons_andor_elements.append(plus_1_button)
     secondary_buttons_andor_elements.append(plus_10_button)
     secondary_buttons_andor_elements.append(minus_1_button)
@@ -440,13 +440,27 @@ def fortuneSystem():
 def fortuneSystemUpdate(fortune):
     global fortune_boxes, Fortune
     Fortune = fortune
-    index = 0
-    for box in fortune_boxes:
-        if index <= fortune:
-            box.config(fill="blue")
-        else:
-            box.config(fill="white")
+    start_x = 675
+    start_y = 598
+    box_size_x = 11
+    box_size_y = 11.5
+    spacing = 8.25
+
+    box_y = start_y
+    fortune_index = 1
+    for row in range(30):
+        box_x = start_x
+        for column in range(3):
+            if fortune_index <= Fortune:
+                main_canvas.create_rectangle(box_x, box_y, box_x + box_size_x, box_y + box_size_y, fill="blue")
+                
+            else:
+                main_canvas.create_rectangle(box_x, box_y, box_x + box_size_x, box_y + box_size_y, fill="white")
+                
+            fortune_index += 1
             
+            box_x += box_size_x + spacing
+        box_y -= box_size_x + (spacing/2.6)
     
 def adding_or_subtracting_fortune():
     print("\n adding_or_subtracting_fortune \n")
