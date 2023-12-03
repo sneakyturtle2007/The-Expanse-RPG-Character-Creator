@@ -472,6 +472,8 @@ def settingUp_Interactables(stats):
     print("\n settingUp_Interactables \n")
     fortuneSystem(stats)
 
+#FORTUNE SYSTEM
+
 def fortuneSystem(stats):
     global window_elements, secondary_buttons_andor_elements,Fortune,fortune_boxes
     print("\n fortuneSystem \n")
@@ -518,7 +520,14 @@ def fortuneSystem(stats):
     
 def fortuneSystemUpdate(fortune):
     global fortune_boxes, Fortune
-    Fortune = fortune
+    if fortune <= 90 or fortune >= 0:
+        Fortune = fortune
+    else:
+        if fortune > 90:
+            Fortune = 90
+        else:
+            Fortune = 0
+            
     start_x = 675
     start_y = 598
     box_size_x = 11
