@@ -1,4 +1,4 @@
-# The-Expanse-RPG-Character-Creator  
+# The-Expanse-RPG-Character-Manager 
    
  Pre_Alpha-
   - Basic stats editable  
