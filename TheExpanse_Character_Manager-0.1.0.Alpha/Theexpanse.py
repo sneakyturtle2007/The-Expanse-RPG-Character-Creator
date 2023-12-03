@@ -520,7 +520,7 @@ def fortuneSystem(stats):
     
 def fortuneSystemUpdate(fortune):
     global fortune_boxes, Fortune
-    if fortune <= 90 or fortune >= 0:
+    if fortune <= 90 and fortune >= 0:
         Fortune = fortune
     else:
         if fortune > 90:
