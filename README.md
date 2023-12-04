@@ -1,4 +1,4 @@
-# The-Expanse-RPG-Character-Manager 
+# The-Expanse-Online
    
  Pre_Alpha-
   - Basic stats editable  
@@ -12,4 +12,4 @@
 
 # Creator of The Expanse: James S. A. Corey
 
-# Creator of The-Expanse-RPG-Character-Manager: Luis A. Blake
+# Creator of The-Expanse-Online: Luis A. Blake
