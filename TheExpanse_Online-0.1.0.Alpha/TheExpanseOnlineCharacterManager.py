@@ -214,7 +214,8 @@ def display_character_ClickedOn(ifbackpage,stats):
     window.attributes("-topmost", True)
     for elements in window_elements:
         elements.destroy()
-    
+    for elements in secondary_buttons_andor_elements:
+        elements.destroy()
     if ifbackpage == "True":
 
         window_elements = []
@@ -500,25 +501,33 @@ def fortuneSystem(stats):
            
             box_x += box_size_x + spacing
         box_y -= box_size_x + (spacing/2.6)
-
-    plus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="+1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 1)))
-    plus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="+10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 10)))
-    minus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="-1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 1)))
-    minus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="-10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 10)))
+        
+    display_current_fortune = tk.Label(window, text =str(Fortune), bg = "#ffffff", fg = "#000000",font=("Arial", 9,"bold"))
+    display_current_fortune.pack()
+    display_current_fortune.place(x= 693, y = 155)
+    
+    plus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="+1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 1,display_current_fortune)))
+    plus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="+10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 10,display_current_fortune)))
+    minus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="-1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 1,display_current_fortune)))
+    minus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="-10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 10,display_current_fortune)))
     plus_1_button.pack()
     plus_10_button.pack()
     minus_1_button.pack()
     minus_10_button.pack()
-    plus_1_button.place(x=683, y=147)
-    plus_10_button.place(x=703, y=147)
-    minus_1_button.place(x=684, y=166)
-    minus_10_button.place(x=704, y=166)
+    plus_1_button.place(x=669, y=147)
+    plus_10_button.place(x=667, y=166)
+    minus_1_button.place(x=720, y=147)
+    minus_10_button.place(x=718, y=166)
+    
+    
+    
     secondary_buttons_andor_elements.append(plus_1_button)
     secondary_buttons_andor_elements.append(plus_10_button)
     secondary_buttons_andor_elements.append(minus_1_button)
     secondary_buttons_andor_elements.append(minus_10_button)
+    secondary_buttons_andor_elements.append(display_current_fortune)
     
-def fortuneSystemUpdate(fortune):
+def fortuneSystemUpdate(fortune,display_current_fortune):
     global fortune_boxes, Fortune
     if fortune <= 90 and fortune >= 0:
         Fortune = fortune
@@ -528,12 +537,13 @@ def fortuneSystemUpdate(fortune):
         else:
             Fortune = 0
             
+    display_current_fortune.config(text=str(Fortune))
     start_x = 675
     start_y = 598
     box_size_x = 11
     box_size_y = 11.5
     spacing = 8.25
-
+    
     box_y = start_y
     fortune_index = 1
     for row in range(30):
