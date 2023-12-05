@@ -357,7 +357,7 @@ def Edit_displayed_character(stats):
     global secondary_buttons_andor_elements,window_elements
     stat_locations = [(60,64),(65,93),(93,124),(92,152),
                       (260,250),(260,291),(260,334),(260,375),(260,416),(260,459),(260,502),(260,544),(260,585),
-                      (310,40)]
+                      (310,40),(440, 40),(540,40)]
     
     for element in secondary_buttons_andor_elements:
         element.destroy()
@@ -506,10 +506,10 @@ def fortuneSystem(stats):
     display_current_fortune.pack()
     display_current_fortune.place(x= 693, y = 155)
     
-    plus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="+1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 1,display_current_fortune)))
-    plus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="+10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 10,display_current_fortune)))
-    minus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="-1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 1,display_current_fortune)))
-    minus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="-10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 10,display_current_fortune)))
+    plus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="+1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 1),display_current_fortune))
+    plus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="+10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 10),display_current_fortune))
+    minus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="-1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 1),display_current_fortune))
+    minus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="-10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 10),display_current_fortune))
     plus_1_button.pack()
     plus_10_button.pack()
     minus_1_button.pack()
@@ -518,8 +518,6 @@ def fortuneSystem(stats):
     plus_10_button.place(x=667, y=166)
     minus_1_button.place(x=720, y=147)
     minus_10_button.place(x=718, y=166)
-    
-    
     
     secondary_buttons_andor_elements.append(plus_1_button)
     secondary_buttons_andor_elements.append(plus_10_button)
@@ -538,6 +536,7 @@ def fortuneSystemUpdate(fortune,display_current_fortune):
             Fortune = 0
             
     display_current_fortune.config(text=str(Fortune))
+    
     start_x = 675
     start_y = 598
     box_size_x = 11
