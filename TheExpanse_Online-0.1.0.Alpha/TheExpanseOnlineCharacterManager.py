@@ -84,12 +84,10 @@ def convert_to_die_roll(ability_score):
     
     for range_and_score in ability_score_table:
         if(ability_score == range_and_score[1]):
-            print("ability score : " , ability_score , "\n")
             
-            print("number of that score: " , range_and_score[0][0], "\n")
             
             return range_and_score[0][0]
-    print("ERROR: ability score not found\n\n\n")
+    
    
 def get_characters():
     characters = []
@@ -317,7 +315,7 @@ def save_displayed_character(stats):
     UpdatedCharacter_list = ""
     current_character_stats = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality,stats.fortune]
     index1 = 0
-    print(stats.fortune)
+    
     for elements in secondary_buttons_andor_elements:
         
         if isinstance(elements,Text):
@@ -336,7 +334,7 @@ def save_displayed_character(stats):
     for characters in Existing_characters:
         if(characters.name == stats.name):
             print(current_character_stats[17])
-            Existing_characters[index1] = character(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17])
+            Existing_characters[index1] = character(current_character_stats[0],current_character_stats[13],current_character_stats[14],current_character_stats[15],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17])
             
         if(index1 != len(Existing_characters)-1 ):
             
@@ -351,13 +349,13 @@ def save_displayed_character(stats):
     Characters_text_file.write(UpdatedCharacter_list)
     Characters_text_file.close()
     
-    display_character_ClickedOn("False", character(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17]))
+    display_character_ClickedOn("False", character(current_character_stats[0],current_character_stats[13],current_character_stats[14],current_character_stats[15],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17]))
     
 def Edit_displayed_character(stats):
     global secondary_buttons_andor_elements,window_elements
-    stat_locations = [(60,64),(65,93),(93,124),(92,152),
+    stat_locations = [(60,62),(65,92),(93,121),(92,150),
                       (260,250),(260,291),(260,334),(260,375),(260,416),(260,459),(260,502),(260,544),(260,585),
-                      (310,40),(440, 40),(540,40)]
+                      (340,40),(440, 40),(540,40)]
     
     for element in secondary_buttons_andor_elements:
         element.destroy()

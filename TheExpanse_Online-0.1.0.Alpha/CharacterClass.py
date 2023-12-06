@@ -1,5 +1,5 @@
 class character:
-    def __init__(self,name,height,weight,age,personality,accuracy, communication,constitution,dexterity,fighting,intelligence,perception,strength,willpower,origin,social_class,background,fortune):
+    def __init__(self,name,age,height,weight,personality,accuracy, communication,constitution,dexterity,fighting,intelligence,perception,strength,willpower,origin,social_class,background,fortune):
         self.name = name
         self.age = age
         self.height = height
