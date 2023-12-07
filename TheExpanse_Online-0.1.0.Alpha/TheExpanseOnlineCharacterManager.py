@@ -85,7 +85,6 @@ def convert_to_die_roll(ability_score):
     for range_and_score in ability_score_table:
         if(ability_score == range_and_score[1]):
             
-            
             return range_and_score[0][0]
     
    
@@ -165,7 +164,7 @@ def save_character_interactables(stats):
             UpdatedCharacter_list += Existing_characters[index1].__repr__()
             
         index1  += 1
-    print("just a test ")
+    
     Characters_text_file.write(UpdatedCharacter_list)
     Characters_text_file.close()
     characters, current_character_cards, Existing_characters_current = get_characters()
@@ -279,7 +278,7 @@ def display_character_ClickedOn(ifbackpage,stats):
         next_button.place(x=500,y=800)
         edit_button.place(x=10,y=800)
         
-        print("THIS IS A TEST")
+    
         
         
         secondary_buttons_andor_elements.append(next_button)
@@ -372,7 +371,7 @@ def Edit_displayed_character(stats):
     secondary_buttons_andor_elements = []
    
     
-    stat_values = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age]
+    stat_values = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality,stats.fortune]
     
     name = tk.Text(window, height=1,width=10)
     origin = tk.Text(window, height=1,width=10)
@@ -388,6 +387,9 @@ def Edit_displayed_character(stats):
     strength =  tk.Text(window, height=1,width=2)
     willpower = tk.Text(window, height=1,width=2)
     age = tk.Text(window, height=1,width=6)
+    height = tk.Text(window, height=1,width=6)
+    weight = tk.Text(window, height=1,width=6)
+    
     
     name.configure(font= ("TkDefaultFont", 10))
     origin.configure(font=("TkDefaultFont",10))
@@ -403,6 +405,8 @@ def Edit_displayed_character(stats):
     strength.configure(font=("TkDefaultFont",14))
     willpower.configure(font=("TkDefaultFont",14))
     age.configure(font=("TkDefaultFont",10))
+    height.configure(font=("TkDefaultFont",10))
+    weight.configure(font=("TkDefaultFont",10))
     
     name.insert("end-1c", stat_values[0])
     origin.insert("end-1c", stat_values[1])
@@ -418,6 +422,8 @@ def Edit_displayed_character(stats):
     strength.insert("end-1c", stat_values[11])
     willpower.insert("end-1c", stat_values[12])
     age.insert("end-1c", stat_values[13]) 
+    height.insert("end-1c", stat_values[14])
+    weight.insert("end-1c", stat_values[15])
     
     name.pack()
     origin.pack()
@@ -433,7 +439,9 @@ def Edit_displayed_character(stats):
     strength.pack()
     willpower.pack()
     age.pack()
-
+    height.pack()
+    weight.pack()
+    
     name.place(x= stat_locations[0][0], y = stat_locations[0][1])
     origin.place(x= stat_locations[1][0], y = stat_locations[1][1])
     background.place(x= stat_locations[2][0], y = stat_locations[2][1])
@@ -448,6 +456,8 @@ def Edit_displayed_character(stats):
     strength.place(x= stat_locations[11][0], y = stat_locations[11][1])
     willpower.place(x= stat_locations[12][0], y = stat_locations[12][1])
     age.place(x= stat_locations[13][0], y = stat_locations[13][1])
+    height.place(x= stat_locations[14][0], y = stat_locations[14][1])
+    weight.place(x= stat_locations[15][0], y = stat_locations[15][1])
     
     secondary_buttons_andor_elements.append(name)
     secondary_buttons_andor_elements.append(origin)
@@ -463,20 +473,20 @@ def Edit_displayed_character(stats):
     secondary_buttons_andor_elements.append(strength)
     secondary_buttons_andor_elements.append(willpower)
     secondary_buttons_andor_elements.append(age)
+    secondary_buttons_andor_elements.append(height)
+    secondary_buttons_andor_elements.append(weight)
     secondary_buttons_andor_elements.append(back_button)
     secondary_buttons_andor_elements.append(save_button)
 
 #FUNCTIONS FOR CHARACTER SHEET FUNCTIONALITY
 
 def settingUp_Interactables(stats):
-    print("\n settingUp_Interactables \n")
     fortuneSystem(stats)
 
 #FORTUNE SYSTEM
 
 def fortuneSystem(stats):
     global window_elements, secondary_buttons_andor_elements,Fortune,fortune_boxes
-    print("\n fortuneSystem \n")
     Fortune = stats.fortune
     start_x = 675
     start_y = 598
