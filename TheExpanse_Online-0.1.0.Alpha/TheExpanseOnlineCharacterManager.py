@@ -22,7 +22,7 @@ try:
 except ImportError:
     
     subprocess.call(['pip', 'install', 'Pillow'])
-    from PIL import Image
+    from PIL import Image, ImageTk
 try:
     import lorem
 except ImportError:
@@ -152,9 +152,9 @@ def save_character_interactables(stats):
     index1 = 0
     for characters in Existing_characters:
         if(characters.name == stats.name):
-            print(current_character_stats[17])
+            
             Existing_characters[index1] = character(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17])
-            print(Existing_characters[index1])
+           
         if(index1 != len(Existing_characters)-1 ):
             
             UpdatedCharacter_list += Existing_characters[index1].__repr__()
@@ -332,7 +332,7 @@ def save_displayed_character(stats):
     
     for characters in Existing_characters:
         if(characters.name == stats.name):
-            print(current_character_stats[17])
+            
             Existing_characters[index1] = character(current_character_stats[0],current_character_stats[13],current_character_stats[14],current_character_stats[15],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17])
             
         if(index1 != len(Existing_characters)-1 ):
