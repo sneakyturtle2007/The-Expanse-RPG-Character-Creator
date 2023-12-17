@@ -25,10 +25,13 @@ except ImportError:
     from PIL import Image, ImageTk
 try:
     import lorem
+    import tkcap
 except ImportError:
     
     subprocess.call(['pip', 'install', 'lorem'])
+    subprocess.call(['pip','install','tkcap'])
     import lorem
+    import tkcap
 
 from CharacterClass import character
 
@@ -266,22 +269,16 @@ def display_character_ClickedOn(ifbackpage,stats):
         edit_button = Button(window, bg="#424242", fg="#E6E6E6", text="Edit", font=("Arial", 10),
                      command=lambda: Edit_displayed_character(stats))
 
-        next_button = Button(window, bg="#424242", fg="#E6E6E6", text="Next", font=("Arial", 10),
-                     command=lambda: display_character_ClickedOn("True", stats))
         
-        
-        next_button.pack() 
         back_button.pack()
         edit_button.pack()
         
         back_button.place(x=10,y=10)
-        next_button.place(x=500,y=800)
         edit_button.place(x=10,y=800)
         
     
         
         
-        secondary_buttons_andor_elements.append(next_button)
         secondary_buttons_andor_elements.append(back_button)
         secondary_buttons_andor_elements.append(edit_button)
                       
