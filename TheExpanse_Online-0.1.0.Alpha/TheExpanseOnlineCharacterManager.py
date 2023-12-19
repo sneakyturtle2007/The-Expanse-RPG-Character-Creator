@@ -274,7 +274,7 @@ def display_character_ClickedOn(ifbackpage,stats):
         edit_button.pack()
         
         back_button.place(x=10,y=10)
-        edit_button.place(x=10,y=800)
+        edit_button.place(x=10,y=850)
         
     
         
@@ -304,49 +304,7 @@ def display_stats(stats):
         secondary_buttons_andor_elements.append(stat_label)
         
         index += 1
-   
-def save_displayed_character(stats):
-    global secondary_buttons_andor_elements,Existing_characters
-    
-    UpdatedCharacter_list = ""
-    current_character_stats = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality,stats.fortune]
-    index1 = 0
-    
-    for elements in secondary_buttons_andor_elements:
-        
-        if isinstance(elements,Text):
-            
-            value = elements.get("1.0", "end-1c")
-            if index1 > 3 and index1 < 13:
-                current_character_stats[index1] = convert_to_die_roll(int(value))
-            else:
-                current_character_stats[index1] = value
-            
-            index1 += 1
- 
-    Characters_text_file = open("TheExpanseCharacterCreator.txt", "w")
-    index1 = 0
-    
-    for characters in Existing_characters:
-        if(characters.name == stats.name):
-            
-            Existing_characters[index1] = character(current_character_stats[0],current_character_stats[13],current_character_stats[14],current_character_stats[15],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17])
-            
-        if(index1 != len(Existing_characters)-1 ):
-            
-            UpdatedCharacter_list += Existing_characters[index1].__repr__()
-            UpdatedCharacter_list += "\n"
-        else:
-            
-            UpdatedCharacter_list += Existing_characters[index1].__repr__()
-            
-        index1  += 1
-        
-    Characters_text_file.write(UpdatedCharacter_list)
-    Characters_text_file.close()
-    
-    display_character_ClickedOn("False", character(current_character_stats[0],current_character_stats[13],current_character_stats[14],current_character_stats[15],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17]))
-    
+
 def Edit_displayed_character(stats):
     global secondary_buttons_andor_elements,window_elements
     stat_locations = [(60,62),(65,92),(93,121),(92,150),
@@ -474,6 +432,49 @@ def Edit_displayed_character(stats):
     secondary_buttons_andor_elements.append(weight)
     secondary_buttons_andor_elements.append(back_button)
     secondary_buttons_andor_elements.append(save_button)
+   
+def save_displayed_character(stats):
+    global secondary_buttons_andor_elements,Existing_characters
+    
+    UpdatedCharacter_list = ""
+    current_character_stats = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality,stats.fortune]
+    index1 = 0
+    
+    for elements in secondary_buttons_andor_elements:
+        
+        if isinstance(elements,Text):
+            
+            value = elements.get("1.0", "end-1c")
+            if index1 > 3 and index1 < 13:
+                current_character_stats[index1] = convert_to_die_roll(int(value))
+            else:
+                current_character_stats[index1] = value
+            
+            index1 += 1
+ 
+    Characters_text_file = open("TheExpanseCharacterCreator.txt", "w")
+    index1 = 0
+    
+    for characters in Existing_characters:
+        if(characters.name == stats.name):
+            
+            Existing_characters[index1] = character(current_character_stats[0],current_character_stats[13],current_character_stats[14],current_character_stats[15],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17])
+            
+        if(index1 != len(Existing_characters)-1 ):
+            
+            UpdatedCharacter_list += Existing_characters[index1].__repr__()
+            UpdatedCharacter_list += "\n"
+        else:
+            
+            UpdatedCharacter_list += Existing_characters[index1].__repr__()
+            
+        index1  += 1
+        
+    Characters_text_file.write(UpdatedCharacter_list)
+    Characters_text_file.close()
+    
+    display_character_ClickedOn("False", character(current_character_stats[0],current_character_stats[13],current_character_stats[14],current_character_stats[15],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17]))
+    
 
 #FUNCTIONS FOR CHARACTER SHEET FUNCTIONALITY
 
@@ -519,10 +520,10 @@ def fortuneSystem(stats):
     plus_10_button.pack()
     minus_1_button.pack()
     minus_10_button.pack()
-    plus_1_button.place(x=669, y=147)
-    plus_10_button.place(x=667, y=166)
-    minus_1_button.place(x=720, y=147)
-    minus_10_button.place(x=718, y=166)
+    plus_1_button.place(x=720, y=147)
+    plus_10_button.place(x=718, y=166)
+    minus_1_button.place(x=669, y=147)
+    minus_10_button.place(x=667, y=166)
     
     secondary_buttons_andor_elements.append(plus_1_button)
     secondary_buttons_andor_elements.append(plus_10_button)
@@ -541,7 +542,8 @@ def fortuneSystemUpdate(fortune,display_current_fortune):
             Fortune = 0
             
     display_current_fortune.config(text=str(Fortune))
-    
+    for box in fortune_boxes:
+        main_canvas.delete(box)
     start_x = 675
     start_y = 598
     box_size_x = 11
@@ -554,10 +556,10 @@ def fortuneSystemUpdate(fortune,display_current_fortune):
         box_x = start_x
         for column in range(3):
             if fortune_index <= Fortune:
-                main_canvas.create_rectangle(box_x, box_y, box_x + box_size_x, box_y + box_size_y, fill="blue")
+                fortune_boxes.append(main_canvas.create_rectangle(box_x, box_y, box_x + box_size_x, box_y + box_size_y, fill="blue"))
                 
             else:
-                main_canvas.create_rectangle(box_x, box_y, box_x + box_size_x, box_y + box_size_y, fill="white")
+                fortune_boxes.append(main_canvas.create_rectangle(box_x, box_y, box_x + box_size_x, box_y + box_size_y, fill="white"))
                 
             fortune_index += 1
             
