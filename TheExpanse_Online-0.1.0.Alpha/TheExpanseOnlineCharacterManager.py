@@ -941,6 +941,7 @@ def save_image(image_path):
     shutil.copy(image_path, destination_path)
 
 def save_character():
+    
     current_character_to_string = ""
     old_characters_text = ""
     old_characters = open("TheExpanseCharacterCreator.txt", "r")
@@ -952,7 +953,9 @@ def save_character():
             current_character_to_string += str(index) + ","
         counter += 1
     old_characters_text = old_characters.readlines()
+    
     if(len(old_characters_text) > 0):
+        
         Characters = open("TheExpanseCharacterCreator.txt", "w")
         old_characters_text += "\n"
         old_characters_text += current_character_to_string
@@ -961,7 +964,9 @@ def save_character():
         old_characters.close()  
         Characters.close()  
         display_characters(get_characters())   
+        
     else:
+        
         Characters = open("TheExpanseCharacterCreator.txt", "w")
         Characters.write(current_character_to_string)
         save_image(current_characeter_image_path)
