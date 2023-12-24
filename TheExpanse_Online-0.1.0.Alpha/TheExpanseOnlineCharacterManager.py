@@ -18,11 +18,13 @@ except ImportError:
     from tkinter import *
     from tkinter import filedialog
 try:
-    from PIL import Image, ImageTk
+    from PIL import Image, ImageTk, ImageGrab
+    import re
 except ImportError:
-    
     subprocess.call(['pip', 'install', 'Pillow'])
-    from PIL import Image, ImageTk
+    subprocess.call(['pip', 'install', 're'])
+    from PIL import Image, ImageTk, ImageGrab
+    import re
 try:
     import lorem
     import tkcap
@@ -80,7 +82,7 @@ perception.set("")
 strength.set("")
 willpower.set("")
 
-#GENERIC FUNCTIONS
+#*GENERIC FUNCTIONS - START
 
 def convert_to_die_roll(ability_score):
     ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]
@@ -120,7 +122,9 @@ def get_characters():
     current_character_cards = characters
     return characters, current_character_cards, Existing_characters_current
 
-#FUNCTIONS FOR MAIN MENU 
+#*GENERIC FUNCTIONS - END
+
+#*FUNCTIONS FOR MAIN MENU  - START
 
 def create_character_card(image_path,x,y, parameters,name):
     
@@ -204,7 +208,9 @@ def display_characters(characters, current_character_cards ,Existing_characters_
     Add_characer_button.place(x=380,y=440)
     window_elements.append(Add_characer_button)    
    
-#FUNCTIONS FOR DISPLAYING CHARACTER 
+#*FUNCTIONS FOR MAIN MENU  - END
+
+#*FUNCTIONS FOR DISPLAYING CHARACTER - START
                 
 def display_character_ClickedOn(ifbackpage,stats):
     global window_elements,displaying_character_background_constant,secondary_buttons_andor_elements
@@ -474,12 +480,18 @@ def save_displayed_character(stats):
     Characters_text_file.close()
     
     display_character_ClickedOn("False", character(current_character_stats[0],current_character_stats[13],current_character_stats[14],current_character_stats[15],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17]))
-    
 
-#FUNCTIONS FOR CHARACTER SHEET FUNCTIONALITY
+#*FUNCTIONS FOR DISPLAYING CHARACTER - END
+
+#*FUNCTIONS FOR CHARACTER SHEET FUNCTIONALITY -  START
 
 def settingUp_Interactables(stats):
+    global secondary_buttons_andor_elements
     fortuneSystem(stats)
+    TurnCharacterToJPEG_Button = Button(window, bg="#424242", fg="#E6E6E6", text="Download", font=("Arial", 10), command=lambda: Character_Sheet_To_JPEG())
+    TurnCharacterToJPEG_Button.pack()
+    TurnCharacterToJPEG_Button.place(x=700, y=850)
+    secondary_buttons_andor_elements.append(TurnCharacterToJPEG_Button)
 
 #FORTUNE SYSTEM
 
@@ -566,7 +578,45 @@ def fortuneSystemUpdate(fortune,display_current_fortune):
             box_x += box_size_x + spacing
         box_y -= box_size_x + (spacing/2.6)
     
-#FUNCTIONS FOR CHARACTER CREATION
+#TURNING CHARACTER SHEET INTO JPEG
+
+def Character_Sheet_To_JPEG():
+    global window_elements,secondary_buttons_andor_elements
+    Temp_Window_Elements = window_elements
+    Temp_Secondary_Buttons_Andor_Elements = secondary_buttons_andor_elements
+    
+    for element in window_elements :
+        element.destroy()
+    for element in secondary_buttons_andor_elements:
+        textOfElement = re.sub("[^0-9]", "", str(element.cget("text")))
+        if not isinstance(element,Label):
+            element.destroy()
+        elif textOfElement.isdigit():
+            element.destroy()
+    
+    for box in fortune_boxes:
+        main_canvas.delete(box)
+    
+    window.update()
+    
+    x = window.winfo_rootx()
+    y = window.winfo_rooty()
+    width = window.winfo_width()
+    height = window.winfo_height()
+
+    character_sheet = ImageGrab.grab(bbox=(x, y, x + width, y + height))
+
+    file_path = filedialog.asksaveasfilename(defaultextension=".jpeg", filetypes=[("JPEG files", "*.jpeg")])
+    if file_path:
+        character_sheet.save(file_path)
+        
+    window_elements = Temp_Window_Elements
+    secondary_buttons_andor_elements = Temp_Secondary_Buttons_Andor_Elements
+    
+    
+#*FUNCTIONS FOR CHARACTER SHEET FUNCTIONALITY - END
+
+#*FUNCTIONS FOR CHARACTER CREATION - START
 
 def display_charactermaker():
     global window_elements,current_character_cards,current_character_being_made,currently_making_character,current_characeter_image_path
@@ -973,7 +1023,9 @@ def save_character():
         old_characters.close()
         Characters.close() 
         display_characters(get_characters())
-        
+
+#*FUNCTIONS FOR CHARACTER CREATION - END
+
 #MAIN PROGRAM
 
 characters, current_character_cards, Existing_characters = get_characters()
