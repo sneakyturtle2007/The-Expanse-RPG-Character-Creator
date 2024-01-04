@@ -136,7 +136,7 @@ def create_character_card(image_path,x,y, parameters,name):
     
     main_canvas.tag_bind(card_id, "<Button-1>", lambda card_item=(card_id, image, parameters) : display_character_ClickedOn("False",parameters))
     character_name_label = tk.Label(window, text = name, bg="#212121", fg = "#E6E6E6",font=("Arial", 10))
-    character_name_label.pack()
+    
     character_name_label.place(x= x+(35-(len(name)*3)), y = y+80)
     
     return character_name_label
@@ -204,7 +204,7 @@ def display_characters(characters, current_character_cards ,Existing_characters_
             index += 1
             
     Add_characer_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Add Character",font=("Arial", 10),command=lambda:display_charactermaker())           
-    Add_characer_button.pack()
+    
     Add_characer_button.place(x=380,y=440)
     window_elements.append(Add_characer_button)    
    
@@ -240,8 +240,7 @@ def display_character_ClickedOn(ifbackpage,stats):
         #display_stats(stats)
         back_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:display_character_ClickedOn("False",stats))
         edit_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Edit",font=("Arial", 10),command=lambda:Edit_displayed_character(stats))
-        back_button.pack()
-        edit_button.pack()
+       
         back_button.place(x=10,y=10)
         
         
@@ -276,8 +275,7 @@ def display_character_ClickedOn(ifbackpage,stats):
                      command=lambda: Edit_displayed_character(stats))
 
         
-        back_button.pack()
-        edit_button.pack()
+       
         
         back_button.place(x=10,y=10)
         edit_button.place(x=10,y=850)
@@ -305,7 +303,7 @@ def display_stats(stats):
         else:
             stat_label = tk.Label(window, text =   values, bg="#FFFFFF", fg = "#000000",font=("Arial", 9))
             
-        stat_label.pack()
+        
         stat_label.place(x= stat_locations[index][0], y = stat_locations[index][1])
         secondary_buttons_andor_elements.append(stat_label)
         
@@ -323,8 +321,7 @@ def Edit_displayed_character(stats):
     back_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:display_characters(current_character_cards))
     save_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Save",font=("Arial", 10),command=lambda:save_displayed_character(stats))
     
-    save_button.pack()
-    back_button.pack()
+    
     
     back_button.place(x=10,y=10)
     save_button.place(x=10,y=800)
@@ -385,23 +382,6 @@ def Edit_displayed_character(stats):
     age.insert("end-1c", stat_values[13]) 
     height.insert("end-1c", stat_values[14])
     weight.insert("end-1c", stat_values[15])
-    
-    name.pack()
-    origin.pack()
-    background.pack()
-    social_class.pack()
-    accuracy.pack()
-    communication.pack()
-    constitution.pack()
-    dexterity.pack()
-    fighting.pack()
-    intelligence.pack()
-    perception.pack()
-    strength.pack()
-    willpower.pack()
-    age.pack()
-    height.pack()
-    weight.pack()
     
     name.place(x= stat_locations[0][0], y = stat_locations[0][1])
     origin.place(x= stat_locations[1][0], y = stat_locations[1][1])
@@ -489,7 +469,7 @@ def settingUp_Interactables(stats):
     global secondary_buttons_andor_elements
     fortuneSystem(stats)
     TurnCharacterToJPEG_Button = Button(window, bg="#424242", fg="#E6E6E6", text="Download", font=("Arial", 10), command=lambda: Character_Sheet_To_JPEG())
-    TurnCharacterToJPEG_Button.pack()
+    
     TurnCharacterToJPEG_Button.place(x=700, y=850)
     secondary_buttons_andor_elements.append(TurnCharacterToJPEG_Button)
 
@@ -521,17 +501,14 @@ def fortuneSystem(stats):
         box_y -= box_size_x + (spacing/2.6)
         
     display_current_fortune = tk.Label(window, text =str(Fortune), bg = "#ffffff", fg = "#000000",font=("Arial", 9,"bold"))
-    display_current_fortune.pack()
+   
     display_current_fortune.place(x= 693, y = 155)
     
     plus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="+1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 1),display_current_fortune))
     plus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="+10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 10),display_current_fortune))
     minus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="-1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 1),display_current_fortune))
     minus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="-10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 10),display_current_fortune))
-    plus_1_button.pack()
-    plus_10_button.pack()
-    minus_1_button.pack()
-    minus_10_button.pack()
+   
     plus_1_button.place(x=720, y=147)
     plus_10_button.place(x=718, y=166)
     minus_1_button.place(x=669, y=147)
@@ -581,18 +558,32 @@ def fortuneSystemUpdate(fortune,display_current_fortune):
 #TURNING CHARACTER SHEET INTO JPEG
 
 def Character_Sheet_To_JPEG():
-    global window_elements,secondary_buttons_andor_elements
-    Temp_Window_Elements = window_elements
-    Temp_Secondary_Buttons_Andor_Elements = secondary_buttons_andor_elements
+    global window_elements,secondary_buttons_andor_elements,Fortune
+    
+    forgotten_elements = []
+    element_locations = []
     
     for element in window_elements :
-        element.destroy()
+        
+        element_locations.append((element.winfo_x(),element.winfo_y()))
+        forgotten_elements.append(element)
+        element.place_forget()
+        
     for element in secondary_buttons_andor_elements:
+        
         textOfElement = re.sub("[^0-9]", "", str(element.cget("text")))
+        
         if not isinstance(element,Label):
-            element.destroy()
+            
+            element_locations.append((element.winfo_x(),element.winfo_y()))
+            forgotten_elements.append(element)
+            element.place_forget()
+            
         elif textOfElement.isdigit():
-            element.destroy()
+            
+            element_locations.append((element.winfo_x(),element.winfo_y()))
+            forgotten_elements.append(element)
+            element.place_forget()
     
     for box in fortune_boxes:
         main_canvas.delete(box)
@@ -609,9 +600,10 @@ def Character_Sheet_To_JPEG():
     file_path = filedialog.asksaveasfilename(defaultextension=".jpeg", filetypes=[("JPEG files", "*.jpeg")])
     if file_path:
         character_sheet.save(file_path)
-        
-    window_elements = Temp_Window_Elements
-    secondary_buttons_andor_elements = Temp_Secondary_Buttons_Andor_Elements
+    
+    for index in range(len(forgotten_elements)):
+        forgotten_elements[index].place(x=element_locations[index][0],y=element_locations[index][1])
+    fortuneSystemUpdate(Fortune, secondary_buttons_andor_elements[len(secondary_buttons_andor_elements)-1])
     
     
 #*FUNCTIONS FOR CHARACTER SHEET FUNCTIONALITY - END
@@ -637,70 +629,70 @@ def display_charactermaker():
     character_image = Button(window, bg="#424242",image = image,compound="bottom",
                                 font=("Arial", 10),command=choose_image)
     character_image.image = image
-    character_image.pack()
+    
     character_image.place(x=165,y=20)
     window_elements.append(character_image)
     
     name_label = tk.Label(window, text = "Name", bg="#212121", fg = "#E6E6E6",font=("Arial", 10))
-    name_label.pack()
+    
     name_label.place(x=232,y=230)
     window_elements.append(name_label)
     
     name = tk.Text(window, height=1,width=15)
-    name.pack()
+    
     name.place(x=192,y=260)
     window_elements.append(name)
     
     height_label = tk.Label(window, text = "Height (in)", bg="#212121", fg = "#E6E6E6",font=("Arial", 10))
-    height_label.pack()
+    
     height_label.place(x=159,y=285)
     window_elements.append(height_label)
     
     height = tk.Text(window, height=1,width=7)
-    height.pack()
+    
     height.place(x=162,y=310)
     window_elements.append(height)
     
     weight_label = tk.Label(window, text = "Weight (lbs)", bg="#212121", fg = "#E6E6E6",font=("Arial", 10))
-    weight_label.pack()
+    
     weight_label.place(x=289,y=285)
     window_elements.append(weight_label)
     
     weight = tk.Text(window, height=1,width=7)
-    weight.pack()
+    
     weight.place(x=292,y=310)
     window_elements.append(weight)
     
     age_label = tk.Label(window, text = "Age", bg="#212121", fg = "#E6E6E6",font=("Arial", 10))
-    age_label.pack()
+    
     age_label.place(x=240,y=285)
     window_elements.append(age_label)
     
     age = tk.Text(window,height=1, width=5)
-    age.pack()
+    
     age.place(x=235,y=310)
     window_elements.append(age)
     
     personality_label = tk.Label(window, text = "Personality", bg="#212121", fg = "#E6E6E6",font=("Arial", 10))
-    personality_label.pack()
+    
     personality_label.place(x=215,y=335)
     window_elements.append(personality_label)
     
     personality = tk.Text(window, wrap="word",height=7, width=40)
     personality.insert("end-1c", "Don't use new line characters such as Enter or Return")
-    personality.pack()
+    
     personality.place(x=90,y=360)
     window_elements.append(personality)
     
     parameters = get_characters()
     back_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:display_characters(*parameters)) 
               
-    back_button.pack()
+    
     back_button.place(x=20,y=20)
     window_elements.append(back_button)
     
     next_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Next",font=("Arial", 10),command=lambda:stat_setter())
-    next_button.pack()
+    
     next_button.place(x=450,y=450)
     window_elements.append(next_button)
     if (len(current_character_being_made) > 0):
@@ -743,8 +735,7 @@ def stat_setter():
         for index in range(0,9): 
             stat_label, dropdownmenu = tk.Label(window, text = stats_text[index], bg="#212121", fg = "#E6E6E6",font=("Arial", 10)), OptionMenu(window, stats[index], "3", "4", "5", "6", "7", "8", "9", "10", "11", "12","13","14","15","16","17","18")
             
-            stat_label.pack()
-            dropdownmenu.pack()
+            
             
             stat_label.place(x= 37 + (90 *location), y = increment-20)
             dropdownmenu.place(x = (37 + (90 *location)), y = increment)
@@ -759,8 +750,7 @@ def stat_setter():
                 
         back_button, done_button  = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:display_charactermaker()), Button(window, bg="#424242", fg = "#E6E6E6",text="Done",font=("Arial", 10),command=lambda:origin_setter())
         
-        back_button.pack()
-        done_button.pack()
+        
         
         back_button.place(x=20,y=20)   
         done_button.place(x=450,y=450)
@@ -813,9 +803,7 @@ def origin_setter():
         
         Belter_Button.image, Earther_Button.image,  Martian_Button.image  = Belter_PhotoImage, Earther_PhotoImage, Martian_PhotoImage
         
-        Belter_Button.pack()
-        Earther_Button.pack()
-        Martian_Button.pack()
+        
         
         window_elements.append(Belter_Button)
         window_elements.append(Earther_Button)
@@ -826,7 +814,7 @@ def origin_setter():
         Martian_Button.place(x = 60 + (500 * 2),y = height)
         
         back_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:stat_setter())
-        back_button.pack()
+        
         back_button.place(x=20,y=10)    
         window_elements.append(back_button)
        
@@ -859,11 +847,6 @@ def social_class_setter_and_Background_setter():
     
     Outsider_Button, LowerClass_Button, MiddleClass_Button, UpperClass_Button= Button(window, text = "Outsider", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_background_options("Outsider")), Button(window, text= "Lower Class", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_background_options("Lower Class")), Button(window, text = "Middle Class", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_background_options("Middle Class")),  Button(window, text = "Upper Class", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_background_options("Upper Class"))
     
-    Outsider_Button.pack()
-    LowerClass_Button.pack()
-    MiddleClass_Button.pack()   
-    UpperClass_Button.pack()
-    
     Outsider_Button.place(x= 37 + (110 *0), y = increment)
     LowerClass_Button.place(x= 37 + (110 *1), y = increment)
     MiddleClass_Button.place(x= 37 + (110 *2), y = increment)
@@ -875,7 +858,7 @@ def social_class_setter_and_Background_setter():
     window_elements.append(UpperClass_Button)
     
     back_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:origin_setter())
-    back_button.pack()
+
     back_button.place(x=20,y=10)
     window_elements.append(back_button)
    
@@ -886,10 +869,6 @@ def display_background_options(text):
     secondary_buttons_andor_elements = []
     if(text== "Outsider"):
         Bohemian_Button, Exile_Button, Outcast_Button = Button(window, text = "Bohemian", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_Save_Character_Button_and_Save_Choice(1)), Button(window, text = "Exile", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_Save_Character_Button_and_Save_Choice(3)), Button(window,text= "Outcast", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_Save_Character_Button_and_Save_Choice(5))
-        
-        Bohemian_Button.pack()
-        Exile_Button.pack() 
-        Outcast_Button.pack()
         
         Bohemian_Button.place(x= 37 + (110 *0), y = 120)
         Exile_Button.place(x= 37 + (110 *1), y = 120)
@@ -906,11 +885,7 @@ def display_background_options(text):
         
     elif(text == "Lower Class"):
         Military_Button, Laborer_Button, Urban_Button = Button(window, text= "Military", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_Save_Character_Button_and_Save_Choice(1)), Button(window, text = "Laborer", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_Save_Character_Button_and_Save_Choice(3)), Button(window, text = "Urban", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_Save_Character_Button_and_Save_Choice(5))
-        
-        Military_Button.pack()
-        Laborer_Button.pack()
-        Urban_Button.pack()
-        
+               
         Military_Button.place(x= 37 + (110 *0), y = 120)
         Laborer_Button.place(x= 37 + (110 *1), y = 120)
         Urban_Button.place(x= 37 + (110 *2), y = 120)
@@ -926,11 +901,7 @@ def display_background_options(text):
             socialClass_set = True
     elif(text == "Middle Class"):
         Academic_Button, Suburban_Button, Trade_Button  = Button(window, text = "Academic", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_Save_Character_Button_and_Save_Choice(1)), Button(window, text = "Suburban", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_Save_Character_Button_and_Save_Choice(3)), Button(window, text = "Trade", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_Save_Character_Button_and_Save_Choice(5))
-        
-        Academic_Button.pack()
-        Suburban_Button.pack()
-        Trade_Button.pack()
-        
+
         Academic_Button.place(x= 37 + (110 *0), y = 120)
         Suburban_Button.place(x= 37 + (110 *1), y = 120)
         Trade_Button.place(x= 37 + (110 *2), y = 120)
@@ -945,11 +916,7 @@ def display_background_options(text):
             socialClass_set = True
     elif(text == "Upper Class"):
         Aristocratic_Button, Corporate_Button, Cosmopolitan_Button  = Button(window, text = "Aristocratic", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_Save_Character_Button_and_Save_Choice(1)), Button(window, text = "Corporate", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_Save_Character_Button_and_Save_Choice(3)), Button(window, text = "Cosmopolitan", bg="#212121", fg = "#E6E6E6",font=("Arial", 11),command=lambda:display_Save_Character_Button_and_Save_Choice(5))
-        
-        Aristocratic_Button.pack()
-        Corporate_Button.pack()
-        Cosmopolitan_Button.pack()
-        
+
         Aristocratic_Button.place(x= 37 + (110 *0), y = 120)
         Corporate_Button.place(x= 37 + (110 *1), y = 120)
         Cosmopolitan_Button.place(x= 37 + (110 *2), y = 120)
@@ -966,7 +933,7 @@ def display_background_options(text):
 def display_Save_Character_Button_and_Save_Choice(Current_Score):
     global window_elements, current_character_being_made, background_set
     Save_Character_Button = Button(window, bg="#424242", fg = "#E6E6E6",text="Save Character",font=("Arial", 10),command=lambda:save_character())
-    Save_Character_Button.pack()
+
     Save_Character_Button.place(x=390,y=450)
     window_elements.append(Save_Character_Button)
     if(background_set):
