@@ -1,29 +1,25 @@
 class character:
-    def __init__(self,name,age,height,weight,personality,accuracy, communication,constitution,dexterity,fighting,intelligence,perception,strength,willpower,origin,social_class,background,fortune):
+    def __init__(self,name,age,height,weight,personality,accuracy, communication,constitution,dexterity,fighting,intelligence,perception,strength,willpower,origin,social_class,background,fortune,conditions):
         self.name = name
         self.age = age
         self.height = height
         self.weight = weight
         self.personality = personality
-        self.accuracy = self.set_ability_score(accuracy)
-        self.constitution = self.set_ability_score(constitution)
-        self.fighting = self.set_ability_score(fighting)
-        self.communication = self.set_ability_score(communication)
-        self.dexterity = self.set_ability_score(dexterity)
-        self.intelligence = self.set_ability_score(intelligence)
-        self.perception = self.set_ability_score(perception)
-        self.strength = self.set_ability_score(strength)
-        self.willpower = self.set_ability_score(willpower)
+        self.accuracy = accuracy
+        self.constitution = constitution
+        self.fighting = fighting
+        self.communication = communication
+        self.dexterity = dexterity
+        self.intelligence = intelligence
+        self.perception = perception
+        self.strength = strength
+        self.willpower = willpower
         self.origin = self.set_origin(origin)
         self.social_class = self.set_social_class(social_class)
         self.background = self.set_background(background)
         self.fortune = int(fortune)
+        self.conditions = conditions
     
-    def set_ability_score(self,ability_score):
-        self.ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]
-        for range_and_score in self.ability_score_table:
-            if(ability_score in range_and_score[0]):
-                return range_and_score[1]
     
     def set_stats(self,stats):
         self.name = stats[0]
@@ -111,5 +107,5 @@ class character:
                         return background_score[1][0]
             
     def __repr__(self): 
-        return self.name+ "," + self.age+ "," +self.height + "," +self.weight + "," +self.personality + "," +  str(self.accuracy) + "," + str(self.communication) + "," + str(self.constitution) + "," + str(self.dexterity) + "," + str(self.fighting) + "," + str(self.intelligence) + "," + str(self.perception) + "," + str(self.strength) + "," +str(self.willpower) + "," + self.origin + "," + self.social_class + "," + self.background + "," + str(self.fortune)
+        return self.name+ "," + self.age+ "," +self.height + "," +self.weight + "," +self.personality + "," +  str(self.accuracy) + "," + str(self.communication) + "," + str(self.constitution) + "," + str(self.dexterity) + "," + str(self.fighting) + "," + str(self.intelligence) + "," + str(self.perception) + "," + str(self.strength) + "," +str(self.willpower) + "," + self.origin + "," + self.social_class + "," + self.background + "," + str(self.fortune) + "," + self.conditions 
    

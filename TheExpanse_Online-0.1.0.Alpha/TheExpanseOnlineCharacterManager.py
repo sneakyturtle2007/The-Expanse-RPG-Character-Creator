@@ -57,7 +57,7 @@ if_stats_set = False
 window_elements = []
 secondary_buttons_andor_elements = []
 Existing_characters = []
-current_character_cards = []
+
 current_characeter_image_path = ""
 current_character_being_made = []
 fortune_boxes = []
@@ -82,21 +82,15 @@ perception.set("")
 strength.set("")
 willpower.set("")
 
+
 #*GENERIC FUNCTIONS - START
 
-def convert_to_die_roll(ability_score):
-    ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]
-    
-    for range_and_score in ability_score_table:
-        if(ability_score == range_and_score[1]):
-            
-            return range_and_score[0][0]
-    
-   
+
+
 def get_characters():
     characters = []
-    current_character_cards = []
-    Existing_characters_current = []
+    
+    Existing_characters = []
     index = 0
     for image in os.listdir("images\\"):
         
@@ -111,16 +105,16 @@ def get_characters():
                 Character = characters2[index].split(",")
                 
                
-                temp_character = character(Character[0],Character[1],Character[2],Character[3],Character[4],convert_to_die_roll(int(Character[5])),convert_to_die_roll(int(Character[6])),convert_to_die_roll(int(Character[7])),convert_to_die_roll(int(Character[8])),convert_to_die_roll(int(Character[9])),convert_to_die_roll(int(Character[10])),convert_to_die_roll(int(Character[11])),convert_to_die_roll(int(Character[12])),convert_to_die_roll(int(Character[13])),Character[14],Character[15],Character[16],Character[17])
-
-                Existing_characters_current.append(temp_character)
+                
+                print(Character[0],Character[1],Character[2],Character[3],Character[4],int(Character[5]),int(Character[6]),int(Character[7]),int(Character[8]),int(Character[9]),int(Character[10]),int(Character[11]),int(Character[12]),int(Character[13]),Character[14],Character[15],Character[16],Character[17],Character[18])
+                Existing_characters.append(character(Character[0],Character[1],Character[2],Character[3],Character[4],int(Character[5]),int(Character[6]),int(Character[7]),int(Character[8]),int(Character[9]),int(Character[10]),int(Character[11]),int(Character[12]),int(Character[13]),Character[14],Character[15],Character[16],Character[17],Character[18]))
              
                 current_character.append(Character[0])
             characters.append(current_character)
             
             index += 1
-    current_character_cards = characters
-    return characters, current_character_cards, Existing_characters_current
+    
+    return characters, Existing_characters
 
 #*GENERIC FUNCTIONS - END
 
@@ -141,43 +135,7 @@ def create_character_card(image_path,x,y, parameters,name):
     
     return character_name_label
 
-def save_character_interactables(stats):
-    current_character_stats = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality,Fortune]
-    index1 = 0
-    
-    for stat in current_character_stats:
-        
-        if index1 > 3 and index1 < 13:
-            current_character_stats[index1] = convert_to_die_roll(int(stat))
-        else:
-            current_character_stats[index1] = stat
-        
-        index1 += 1
-        
-    Characters_text_file = open("TheExpanseCharacterCreator.txt", "w")
-    UpdatedCharacter_list = ""
-    index1 = 0
-    for characters in Existing_characters:
-        if(characters.name == stats.name):
-            
-            Existing_characters[index1] = character(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17])
-           
-        if(index1 != len(Existing_characters)-1 ):
-            
-            UpdatedCharacter_list += Existing_characters[index1].__repr__()
-            UpdatedCharacter_list += "\n"
-        else:
-            
-            UpdatedCharacter_list += Existing_characters[index1].__repr__()
-            
-        index1  += 1
-    
-    Characters_text_file.write(UpdatedCharacter_list)
-    Characters_text_file.close()
-    characters, current_character_cards, Existing_characters_current = get_characters()
-    display_characters(characters, current_character_cards, Existing_characters_current)
-    
-def display_characters(characters, current_character_cards ,Existing_characters_current):#current_character_cards is not used in this function, but is needed to prevent error because the get_characters function returns current_character_cards
+def display_characters(characters ,Existing_characters_current):#current_character_cards is not used in this function, but is needed to prevent error because the get_characters function returns current_character_cards
     global window_elements,secondary_buttons_andor_elements,Existing_characters
     
     for element in window_elements:
@@ -218,6 +176,8 @@ def display_character_ClickedOn(ifbackpage,stats):
     height = window.winfo_screenheight()
    
     window.attributes("-topmost", True)
+    window.after_idle(window.attributes, '-topmost', 0)
+    
     for elements in window_elements:
         elements.destroy()
     for elements in secondary_buttons_andor_elements:
@@ -264,8 +224,6 @@ def display_character_ClickedOn(ifbackpage,stats):
 
         display_stats(stats)
         
-        
-        
         settingUp_Interactables(stats)
         
         back_button = Button(window, bg="#424242", fg="#E6E6E6", text="Back", font=("Arial", 10),
@@ -273,16 +231,10 @@ def display_character_ClickedOn(ifbackpage,stats):
 
         edit_button = Button(window, bg="#424242", fg="#E6E6E6", text="Edit", font=("Arial", 10),
                      command=lambda: Edit_displayed_character(stats))
-
-        
-       
         
         back_button.place(x=10,y=10)
         edit_button.place(x=10,y=850)
-        
     
-        
-        
         secondary_buttons_andor_elements.append(back_button)
         secondary_buttons_andor_elements.append(edit_button)
                       
@@ -318,7 +270,7 @@ def Edit_displayed_character(stats):
     for element in secondary_buttons_andor_elements:
         element.destroy()
     
-    back_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:display_characters(current_character_cards))
+    back_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Back",font=("Arial", 10),command=lambda:save_character_interactables(stats))
     save_button = Button(window, bg="#424242", fg = "#E6E6E6",text="Save",font=("Arial", 10),command=lambda:save_displayed_character(stats))
     
     
@@ -423,7 +375,7 @@ def save_displayed_character(stats):
     global secondary_buttons_andor_elements,Existing_characters
     
     UpdatedCharacter_list = ""
-    current_character_stats = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality,stats.fortune]
+    current_character_stats = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality,stats.fortune,stats.conditions]
     index1 = 0
     
     for elements in secondary_buttons_andor_elements:
@@ -432,7 +384,7 @@ def save_displayed_character(stats):
             
             value = elements.get("1.0", "end-1c")
             if index1 > 3 and index1 < 13:
-                current_character_stats[index1] = convert_to_die_roll(int(value))
+                current_character_stats[index1] = int(value)
             else:
                 current_character_stats[index1] = value
             
@@ -444,7 +396,7 @@ def save_displayed_character(stats):
     for characters in Existing_characters:
         if(characters.name == stats.name):
             
-            Existing_characters[index1] = character(current_character_stats[0],current_character_stats[13],current_character_stats[14],current_character_stats[15],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17])
+            Existing_characters[index1] = character(current_character_stats[0],current_character_stats[13],current_character_stats[14],current_character_stats[15],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17],current_character_stats[18])
             
         if(index1 != len(Existing_characters)-1 ):
             
@@ -459,7 +411,7 @@ def save_displayed_character(stats):
     Characters_text_file.write(UpdatedCharacter_list)
     Characters_text_file.close()
     
-    display_character_ClickedOn("False", character(current_character_stats[0],current_character_stats[13],current_character_stats[14],current_character_stats[15],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17]))
+    display_character_ClickedOn("False", character(current_character_stats[0],current_character_stats[13],current_character_stats[14],current_character_stats[15],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17],current_character_stats[18]))
 
 #*FUNCTIONS FOR DISPLAYING CHARACTER - END
 
@@ -468,11 +420,47 @@ def save_displayed_character(stats):
 def settingUp_Interactables(stats):
     global secondary_buttons_andor_elements
     fortuneSystem(stats)
-    TurnCharacterToJPEG_Button = Button(window, bg="#424242", fg="#E6E6E6", text="Download", font=("Arial", 10), command=lambda: Character_Sheet_To_JPEG())
-    
+    characterConditionsSystem(stats)
+    TurnCharacterToJPEG_Button = Button(window, bg="#424242", fg="#E6E6E6", text="Download", font=("Arial", 10), command=lambda: Character_Sheet_To_JPEG(stats))
     TurnCharacterToJPEG_Button.place(x=700, y=850)
     secondary_buttons_andor_elements.append(TurnCharacterToJPEG_Button)
-
+    
+def save_character_interactables(stats):
+    current_character_stats = [stats.name,stats.origin,stats.background,stats.social_class,stats.accuracy,stats.communication,stats.constitution,stats.dexterity,stats.fighting,stats.intelligence,stats.perception,stats.strength,stats.willpower,stats.age,stats.height,stats.weight,stats.personality,stats.fortune,stats.conditions]
+    index1 = 0
+    
+    for stat in current_character_stats:
+        
+        if index1 > 3 and index1 < 13:
+            current_character_stats[index1] = int(stat)
+        else:
+            current_character_stats[index1] = stat
+        
+        index1 += 1
+        
+    Characters_text_file = open("TheExpanseCharacterCreator.txt", "w")
+    UpdatedCharacter_list = ""
+    index1 = 0
+    for characters in Existing_characters:
+        if(characters.name == stats.name):
+            
+            Existing_characters[index1] = character(current_character_stats[0],current_character_stats[14],current_character_stats[15],current_character_stats[13],current_character_stats[16],current_character_stats[4],current_character_stats[5],current_character_stats[6],current_character_stats[7],current_character_stats[8],current_character_stats[9],current_character_stats[10],current_character_stats[11],current_character_stats[12], current_character_stats[1], current_character_stats[3], current_character_stats[2],current_character_stats[17],current_character_stats[18])
+           
+        if(index1 != len(Existing_characters)-1 ):
+            
+            UpdatedCharacter_list += Existing_characters[index1].__repr__()
+            UpdatedCharacter_list += "\n"
+        else:
+            
+            UpdatedCharacter_list += Existing_characters[index1].__repr__()
+            
+        index1  += 1
+    
+    Characters_text_file.write(UpdatedCharacter_list)
+    Characters_text_file.close()
+    characters, Existing_characters_current = get_characters()
+    display_characters(characters, Existing_characters_current)
+    
 #FORTUNE SYSTEM
 
 def fortuneSystem(stats):
@@ -489,7 +477,7 @@ def fortuneSystem(stats):
     for row in range(30):
         box_x = start_x
         for column in range(3):
-            if fortune_index <= Fortune:
+            if fortune_index <= stats.fortune:
                 fortune_boxes.append(main_canvas.create_rectangle(box_x, box_y, box_x + box_size_x, box_y + box_size_y, fill="blue"))
                 
             else:
@@ -500,14 +488,14 @@ def fortuneSystem(stats):
             box_x += box_size_x + spacing
         box_y -= box_size_x + (spacing/2.6)
         
-    display_current_fortune = tk.Label(window, text =str(Fortune), bg = "#ffffff", fg = "#000000",font=("Arial", 9,"bold"))
+    display_current_fortune = tk.Label(window, text =str(stats.fortune), bg = "#ffffff", fg = "#000000",font=("Arial", 9,"bold"))
    
     display_current_fortune.place(x= 693, y = 155)
     
-    plus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="+1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 1),display_current_fortune))
-    plus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="+10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune + 10),display_current_fortune))
-    minus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="-1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 1),display_current_fortune))
-    minus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="-10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((Fortune - 10),display_current_fortune))
+    plus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="+1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((stats.fortune + 1),display_current_fortune,stats))
+    plus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="+10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((stats.fortune+ 10),display_current_fortune,stats))
+    minus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="-1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((stats.fortune - 1),display_current_fortune,stats))
+    minus_10_button = Button(window, bg="#424242", fg="#E6E6E6", text="-10", font=("Arial", 6), command=lambda: fortuneSystemUpdate((stats.fortune- 10),display_current_fortune,stats))
    
     plus_1_button.place(x=720, y=147)
     plus_10_button.place(x=718, y=166)
@@ -520,17 +508,17 @@ def fortuneSystem(stats):
     secondary_buttons_andor_elements.append(minus_10_button)
     secondary_buttons_andor_elements.append(display_current_fortune)
     
-def fortuneSystemUpdate(fortune,display_current_fortune):
+def fortuneSystemUpdate(fortune,display_current_fortune,stats):
     global fortune_boxes, Fortune
     if fortune <= 90 and fortune >= 0:
-        Fortune = fortune
+        stats.fortune = fortune
     else:
         if fortune > 90:
-            Fortune = 90
+            stats.fortune = 90
         else:
-            Fortune = 0
+            stats.fortune = 0
             
-    display_current_fortune.config(text=str(Fortune))
+    display_current_fortune.config(text=str(stats.fortune))
     for box in fortune_boxes:
         main_canvas.delete(box)
     start_x = 675
@@ -544,7 +532,7 @@ def fortuneSystemUpdate(fortune,display_current_fortune):
     for row in range(30):
         box_x = start_x
         for column in range(3):
-            if fortune_index <= Fortune:
+            if fortune_index <= stats.fortune:
                 fortune_boxes.append(main_canvas.create_rectangle(box_x, box_y, box_x + box_size_x, box_y + box_size_y, fill="blue"))
                 
             else:
@@ -555,9 +543,16 @@ def fortuneSystemUpdate(fortune,display_current_fortune):
             box_x += box_size_x + spacing
         box_y -= box_size_x + (spacing/2.6)
     
+#CHARACTER CONDITIONS SYSTEM
+
+def characterConditionsSystem(stats):
+    global secondary_buttons_andor_elements
+    conditions = ["Blinded","Deafened","Dying","Exhausted","Fatigued","Free-Falling","Helpless","Hindered","Injured","Prone","Restrained","Unconscious","Wounded"]
+    
+    
 #TURNING CHARACTER SHEET INTO JPEG
 
-def Character_Sheet_To_JPEG():
+def Character_Sheet_To_JPEG(stats):
     global window_elements,secondary_buttons_andor_elements,Fortune
     
     forgotten_elements = []
@@ -570,7 +565,8 @@ def Character_Sheet_To_JPEG():
         element.place_forget()
         
     for element in secondary_buttons_andor_elements:
-        
+        print(element)
+        print(element.cget("text"))
         textOfElement = re.sub("[^0-9]", "", str(element.cget("text")))
         
         if not isinstance(element,Label):
@@ -603,7 +599,7 @@ def Character_Sheet_To_JPEG():
     
     for index in range(len(forgotten_elements)):
         forgotten_elements[index].place(x=element_locations[index][0],y=element_locations[index][1])
-    fortuneSystemUpdate(Fortune, secondary_buttons_andor_elements[len(secondary_buttons_andor_elements)-1])
+    fortuneSystemUpdate(Fortune, secondary_buttons_andor_elements[len(secondary_buttons_andor_elements)-1],stats)
     
     
 #*FUNCTIONS FOR CHARACTER SHEET FUNCTIONALITY - END
@@ -957,11 +953,33 @@ def save_image(image_path):
     destination_path = os.path.join("images", os.path.basename(image_path))
     shutil.copy(image_path, destination_path)
 
+def set_ability_score(ability_score):
+        ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]
+        for range_and_score in ability_score_table:
+            if(ability_score in range_and_score[0]):
+                return range_and_score[1]
+    
 def save_character():
     
+    current_character_being_made.append("0")
+    current_character_being_made.append("NONE")
+    
+    current_character_being_made[5] = set_ability_score(int(current_character_being_made[5]))
+    current_character_being_made[6] = set_ability_score(int(current_character_being_made[6]))
+    current_character_being_made[7] = set_ability_score(int(current_character_being_made[7]))
+    current_character_being_made[8] = set_ability_score(int(current_character_being_made[8]))
+    current_character_being_made[9] = set_ability_score(int(current_character_being_made[9]))
+    current_character_being_made[10] = set_ability_score(int(current_character_being_made[10]))
+    current_character_being_made[11] = set_ability_score(int(current_character_being_made[11]))
+    current_character_being_made[12] = set_ability_score(int(current_character_being_made[12]))
+    current_character_being_made[13] = set_ability_score(int(current_character_being_made[13]))
+    
+    print(current_character_being_made)
     current_character_to_string = ""
     old_characters_text = ""
+    
     old_characters = open("TheExpanseCharacterCreator.txt", "r")
+    
     counter = 0
     for index in current_character_being_made:
         if counter == len(current_character_being_made)-1:
@@ -969,6 +987,7 @@ def save_character():
         else:
             current_character_to_string += str(index) + ","
         counter += 1
+        
     old_characters_text = old_characters.readlines()
     
     if(len(old_characters_text) > 0):
@@ -980,7 +999,9 @@ def save_character():
         save_image(current_characeter_image_path)
         old_characters.close()  
         Characters.close()  
-        display_characters(get_characters())   
+        
+        characters, Existing_characters = get_characters()
+        display_characters(characters, Existing_characters)   
         
     else:
         
@@ -989,13 +1010,15 @@ def save_character():
         save_image(current_characeter_image_path)
         old_characters.close()
         Characters.close() 
-        display_characters(get_characters())
+        
+        characters, Existing_characters = get_characters()
+        display_characters(characters, Existing_characters)
 
 #*FUNCTIONS FOR CHARACTER CREATION - END
 
 #MAIN PROGRAM
 
-characters, current_character_cards, Existing_characters = get_characters()
-display_characters(characters,current_character_cards,Existing_characters)
+characters, Existing_characters = get_characters()
+display_characters(characters,Existing_characters)
 
 window.mainloop()
