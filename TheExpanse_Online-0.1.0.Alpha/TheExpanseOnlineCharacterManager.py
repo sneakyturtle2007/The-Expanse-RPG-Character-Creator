@@ -85,7 +85,12 @@ willpower.set("")
 
 #*GENERIC FUNCTIONS - START
 
-
+def set_ability_score(ability_score):
+        ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]
+        for range_and_score in ability_score_table:
+            if(ability_score in range_and_score[0]):
+                return range_and_score[1]
+   
 
 def get_characters():
     characters = []
@@ -488,8 +493,9 @@ def fortuneSystem(stats):
             box_x += box_size_x + spacing
         box_y -= box_size_x + (spacing/2.6)
         
-    display_current_fortune = tk.Label(window, text =str(stats.fortune), bg = "#ffffff", fg = "#000000",font=("Arial", 9,"bold"))
-   
+    display_current_fortune = tk.Label(window, bg = "#ffffff", fg = "#000000",font=("Arial", 9,"bold"))
+    display_current_fortune.config(text=str(stats.fortune))
+    
     display_current_fortune.place(x= 693, y = 155)
     
     plus_1_button = Button(window, bg="#424242", fg="#E6E6E6", text="+1", font=("Arial", 6), command=lambda: fortuneSystemUpdate((stats.fortune + 1),display_current_fortune,stats))
@@ -953,12 +959,6 @@ def save_image(image_path):
     destination_path = os.path.join("images", os.path.basename(image_path))
     shutil.copy(image_path, destination_path)
 
-def set_ability_score(ability_score):
-        ability_score_table = [[[3],-2], [[4,5],-1],[[6,7,8],0],[[9,10,11],1], [[12,13,14],2], [[15,16,17],3], [[18],4]]
-        for range_and_score in ability_score_table:
-            if(ability_score in range_and_score[0]):
-                return range_and_score[1]
-    
 def save_character():
     
     current_character_being_made.append("0")
