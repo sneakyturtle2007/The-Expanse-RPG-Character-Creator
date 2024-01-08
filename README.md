@@ -4,9 +4,7 @@
   - Basic stats editable  
   - Can make characters
 
- 0.1.0.Alpha -
-  - Active character sheet
-  - Dice roller
+ 0.1.0.Alpha - Currently in Progress
     
 # Creators of The Expanse RPG: Green Ronin Publishing
 
