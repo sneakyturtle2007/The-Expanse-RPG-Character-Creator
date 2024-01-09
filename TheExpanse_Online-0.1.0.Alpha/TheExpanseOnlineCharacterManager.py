@@ -1012,7 +1012,7 @@ def save_character():
 
 #*FUNCTIONS FOR CHARACTER CREATION - END
 
-#MAIN PROGRAM
+#PROGRAM START
 
 characters, Existing_characters = get_characters()
 display_characters(characters,Existing_characters)
