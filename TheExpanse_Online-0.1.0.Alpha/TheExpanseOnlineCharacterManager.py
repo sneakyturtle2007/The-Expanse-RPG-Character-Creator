@@ -603,8 +603,7 @@ def Character_Sheet_To_JPEG(stats):
     for index in range(len(forgotten_elements)):
         forgotten_elements[index].place(x=element_locations[index][0],y=element_locations[index][1])
     fortuneSystemUpdate(Fortune, secondary_buttons_andor_elements[len(secondary_buttons_andor_elements)-1],stats)
-    
-    
+     
 #*FUNCTIONS FOR CHARACTER SHEET FUNCTIONALITY - END
 
 #*FUNCTIONS FOR CHARACTER CREATION - START
