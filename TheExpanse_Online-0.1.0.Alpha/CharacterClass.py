@@ -19,26 +19,7 @@ class character:
         self.background = self.set_background(background)
         self.fortune = int(fortune)
         self.conditions = conditions
-    
-    
-    def set_stats(self,stats):
-        self.name = stats[0]
-        self.age = stats[1]
-        self.height = stats[2]
-        self.weight = stats[3]
-        self.personality = stats[4]
-        self.accuracy = self.set_ability_score(stats[5])
-        self.constitution = self.set_ability_score(stats[6])
-        self.fighting = self.set_ability_score(stats[7])
-        self.communication = self.set_ability_score(stats[8])
-        self.dexterity = self.set_ability_score(stats[9])
-        self.intelligence = self.set_ability_score(stats[10])
-        self.perception = self.set_ability_score(stats[11])
-        self.strength = self.set_ability_score(stats[12])
-        self.willpower = self.set_ability_score(stats[13])
-        self.origin = self.set_origin(stats[14])
-        self.social_class = self.set_social_class(stats[15])
-        self.background = self.set_background(stats[16])
+
         
     def set_origin(self,origin_roll):
         origins = ["Belter","Earther","Martian"]

@@ -108,10 +108,7 @@ def get_characters():
                 characters2 = characters_text.readlines()
                 
                 Character = characters2[index].split(",")
-                
-               
-                
-                print(Character[0],Character[1],Character[2],Character[3],Character[4],int(Character[5]),int(Character[6]),int(Character[7]),int(Character[8]),int(Character[9]),int(Character[10]),int(Character[11]),int(Character[12]),int(Character[13]),Character[14],Character[15],Character[16],Character[17],Character[18])
+                               
                 Existing_characters.append(character(Character[0],Character[1],Character[2],Character[3],Character[4],int(Character[5]),int(Character[6]),int(Character[7]),int(Character[8]),int(Character[9]),int(Character[10]),int(Character[11]),int(Character[12]),int(Character[13]),Character[14],Character[15],Character[16],Character[17],Character[18]))
              
                 current_character.append(Character[0])
