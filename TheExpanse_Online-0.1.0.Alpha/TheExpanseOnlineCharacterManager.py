@@ -91,7 +91,6 @@ def set_ability_score(ability_score):
             if(ability_score in range_and_score[0]):
                 return range_and_score[1]
    
-
 def get_characters():
     characters = []
     
@@ -551,7 +550,6 @@ def fortuneSystemUpdate(fortune,display_current_fortune,stats):
 def characterConditionsSystem(stats):
     global secondary_buttons_andor_elements
     conditions = ["Blinded","Deafened","Dying","Exhausted","Fatigued","Free-Falling","Helpless","Hindered","Injured","Prone","Restrained","Unconscious","Wounded"]
-    
     
 #TURNING CHARACTER SHEET INTO JPEG
 
