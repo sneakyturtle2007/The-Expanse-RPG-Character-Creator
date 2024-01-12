@@ -7,7 +7,9 @@
  0.1.0.Alpha-
   - Fortune System Added
   - Conditions System Added
-    
+
+ 0.1.1.Alpha- Currently in Progress
+
 # Creators of The Expanse RPG: Green Ronin Publishing
 
 # Creator of The Expanse: James S. A. Corey
