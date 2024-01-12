@@ -57,12 +57,13 @@ if_stats_set = False
 window_elements = []
 secondary_buttons_andor_elements = []
 Existing_characters = []
-
+Character_Conditions = []
 current_characeter_image_path = ""
 current_character_being_made = []
 fortune_boxes = []
 Fortune = 0
 displaying_character_background_constant = (Image.open("images\\Character_Sheet_1.jpg").width,900)
+
 accuracy = StringVar(window)
 communication = StringVar(window)
 constitution = StringVar(window)
@@ -72,6 +73,35 @@ intelligence = StringVar(window)
 perception = StringVar(window)
 strength = StringVar(window)
 willpower = StringVar(window)
+
+Blinded_bool = BooleanVar()
+Deafened_bool = BooleanVar()
+Dying_bool = BooleanVar()
+Exhausted_bool = BooleanVar()
+Fatigued_bool = BooleanVar()
+Free_Falling_bool = BooleanVar()
+Helpless_bool = BooleanVar()
+Hindered_bool = BooleanVar()
+Injured_bool = BooleanVar()
+Prone_bool = BooleanVar()
+Restrained_bool= BooleanVar()
+Unconscious_bool = BooleanVar()
+Wounded_bool = BooleanVar()
+
+Character_Conditions.append(Blinded_bool)
+Character_Conditions.append(Deafened_bool)
+Character_Conditions.append(Dying_bool)
+Character_Conditions.append(Exhausted_bool)
+Character_Conditions.append(Fatigued_bool)
+Character_Conditions.append(Free_Falling_bool)
+Character_Conditions.append(Helpless_bool)
+Character_Conditions.append(Hindered_bool)
+Character_Conditions.append(Injured_bool)
+Character_Conditions.append(Prone_bool)
+Character_Conditions.append(Restrained_bool)
+Character_Conditions.append(Unconscious_bool)
+Character_Conditions.append(Wounded_bool)
+
 accuracy.set("")
 communication.set("")
 constitution.set("")
@@ -548,9 +578,68 @@ def fortuneSystemUpdate(fortune,display_current_fortune,stats):
 #CHARACTER CONDITIONS SYSTEM
 
 def characterConditionsSystem(stats):
-    global secondary_buttons_andor_elements
+    global secondary_buttons_andor_elements,Character_Conditions
+    
     conditions = ["Blinded","Deafened","Dying","Exhausted","Fatigued","Free-Falling","Helpless","Hindered","Injured","Prone","Restrained","Unconscious","Wounded"]
     
+    current_conditions = stats.conditions.split("`")
+    index = 0
+    for condition in conditions:
+        if condition in current_conditions:
+            Character_Conditions[index].set(True)
+        index += 1
+    
+    Blinded = Checkbutton(window, bg= "#FFFFFF",fg="#000000", text="Blinded  ", font=("Arial", 7, "bold"),variable=Blinded_bool,  command=lambda: set_Condition(stats,conditions[0],Blinded_bool.get()))
+    Deafened = Checkbutton(window, bg= "#FFFFFF",fg="#000000",text="Deafened   ",font=("Arial", 7, "bold") ,variable=Deafened_bool, command=lambda: set_Condition(stats,conditions[1],Deafened_bool.get()))
+    Dying = Checkbutton(window,bg= "#FFFFFF",  fg="#000000",text="Dying       ", font=("Arial", 7, "bold"),variable=Dying_bool, command=lambda: set_Condition(stats,conditions[2],Dying_bool.get()))
+    Exhausted = Checkbutton(window,bg= "#FFFFFF",  fg="#000000",text="Exhausted  ", font=("Arial", 7, "bold"),variable=Exhausted_bool, command=lambda: set_Condition(stats,conditions[3],Exhausted_bool.get()))
+    Fatigued = Checkbutton(window,bg= "#FFFFFF", fg="#000000",text="Fatigued        ", font=("Arial",7 , "bold"),variable=Fatigued_bool,  command=lambda: set_Condition(stats,conditions[4],Fatigued_bool.get()))
+    Free_Falling = Checkbutton(window, bg= "#FFFFFF", fg="#000000",text="Free-Falling  ", font=("Arial", 7, "bold"),variable=Free_Falling_bool,  command=lambda: set_Condition(stats,conditions[5],Free_Falling_bool.get()))
+    Helpless = Checkbutton(window,bg= "#FFFFFF", fg="#000000",text="Helpless   ", font=("Arial", 7, "bold"),variable=Helpless_bool,  command=lambda: set_Condition(stats,conditions[6],Helpless_bool.get()))
+    Hindered = Checkbutton(window,bg= "#FFFFFF", fg="#000000",text="Hindered   ", font=("Arial", 7, "bold"),variable=Hindered_bool,  command=lambda: set_Condition(stats,conditions[7],Hindered_bool.get()))
+    Injured = Checkbutton(window,bg= "#FFFFFF", fg="#000000",text="Injured     ", font=("Arial", 7, "bold"),variable=Injured_bool, command=lambda: set_Condition(stats,conditions[8],Injured_bool.get()))
+    Prone = Checkbutton(window,bg= "#FFFFFF", fg="#000000",text="Prone           ",font=("Arial", 7, "bold"),variable=Prone_bool,  command=lambda: set_Condition(stats,conditions[9],Prone_bool.get()))
+    Restrained = Checkbutton(window, bg= "#FFFFFF", fg="#000000",text="Restrained  ", font=("Arial", 7, "bold"),variable=Restrained_bool, command=lambda: set_Condition(stats,conditions[10],Restrained_bool.get()))
+    Unconscious = Checkbutton(window, bg= "#FFFFFF",fg="#000000",text="Unconscious  ", font=("Arial", 7, "bold"),variable=Unconscious_bool, command=lambda: set_Condition(stats,conditions[11],Unconscious_bool.get()))
+    Wounded = Checkbutton(window, bg= "#FFFFFF",fg="#000000",text="Wounded  ",font=("Arial", 7, "bold"),variable=Wounded_bool, command=lambda: set_Condition(stats,conditions[12],Wounded_bool.get()))
+
+    Blinded.place(x= 312, y = 531)
+    Deafened.place(x= 312, y = 548)
+    Dying.place(x= 312, y = 565)
+    Exhausted.place(x= 312, y = 582)
+    Fatigued.place(x= 312, y = 597)
+    Free_Falling.place(x=435, y = 531)
+    Helpless.place(x= 435, y = 548)
+    Hindered.place(x= 435, y = 565)
+    Injured.place(x= 435, y = 582)
+    Prone.place(x= 435, y = 597)
+    Restrained.place(x= 557, y = 531)
+    Unconscious.place(x= 557, y = 548)
+    Wounded.place(x= 557, y = 565)
+    
+    secondary_buttons_andor_elements.append(Blinded)
+    secondary_buttons_andor_elements.append(Deafened)
+    secondary_buttons_andor_elements.append(Dying)
+    secondary_buttons_andor_elements.append(Exhausted)
+    secondary_buttons_andor_elements.append(Fatigued)
+    secondary_buttons_andor_elements.append(Free_Falling)
+    secondary_buttons_andor_elements.append(Helpless)
+    secondary_buttons_andor_elements.append(Hindered)
+    secondary_buttons_andor_elements.append(Injured)
+    secondary_buttons_andor_elements.append(Prone)
+    secondary_buttons_andor_elements.append(Restrained)
+    secondary_buttons_andor_elements.append(Unconscious)
+    secondary_buttons_andor_elements.append(Wounded)
+    
+def set_Condition(stats,condition,condition_bool):
+    if stats.conditions == "NONE":
+        stats.conditions = condition
+    elif condition_bool == 1:
+        stats.conditions = stats.conditions + ("`" + condition)
+    else:
+        stats.conditions = stats.conditions.replace("`" + condition,"")
+        stats.conditions = stats.conditions.replace(condition,"NONE")
+        
 #TURNING CHARACTER SHEET INTO JPEG
 
 def Character_Sheet_To_JPEG(stats):
