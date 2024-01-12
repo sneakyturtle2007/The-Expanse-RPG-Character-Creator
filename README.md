@@ -4,7 +4,9 @@
   - Basic stats editable  
   - Can make characters
 
- 0.1.0.Alpha - Currently in Progress
+ 0.1.0.Alpha-
+  - Fortune System Added
+  - Conditions System Added
     
 # Creators of The Expanse RPG: Green Ronin Publishing
 
