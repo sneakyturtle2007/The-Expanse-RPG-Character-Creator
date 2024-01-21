@@ -112,7 +112,6 @@ perception.set("")
 strength.set("")
 willpower.set("")
 
-
 #*GENERIC FUNCTIONS - START
 
 def set_ability_score(ability_score):
@@ -764,7 +763,6 @@ def display_charactermaker():
     window_elements.append(personality_label)
     
     personality = tk.Text(window, wrap="word",height=7, width=40)
-    personality.insert("end-1c", "Don't use new line characters such as Enter or Return")
     
     personality.place(x=90,y=360)
     window_elements.append(personality)
@@ -1065,6 +1063,9 @@ def save_character():
     
     counter = 0
     for index in current_character_being_made:
+        if "\n" in index:
+            index = index.replace("\n","~")
+            
         if counter == len(current_character_being_made)-1:
             current_character_to_string += str(index)
         else:
