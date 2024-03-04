@@ -19,12 +19,10 @@ except ImportError:
     from tkinter import filedialog
 try:
     from PIL import Image, ImageTk, ImageGrab
-    import re
 except ImportError:
     subprocess.call(['pip', 'install', 'Pillow'])
     subprocess.call(['pip', 'install', 're'])
     from PIL import Image, ImageTk, ImageGrab
-    import re
 try:
     import lorem
     import tkcap
@@ -145,6 +143,9 @@ def get_characters():
             index += 1
     
     return characters, Existing_characters
+
+
+
 
 #*GENERIC FUNCTIONS - END
 
@@ -656,7 +657,8 @@ def Character_Sheet_To_JPEG(stats):
     for element in secondary_buttons_andor_elements:
         print(element)
         print(element.cget("text"))
-        textOfElement = re.sub("[^0-9]", "", str(element.cget("text")))
+        textOfElement = str(element.cget("text"))
+
         
         if not isinstance(element,Label):
             
@@ -664,11 +666,16 @@ def Character_Sheet_To_JPEG(stats):
             forgotten_elements.append(element)
             element.place_forget()
             
-        elif textOfElement.isdigit():
+        else: 
+            try:
+                textOfElement = int(textOfElement)
+                element_locations.append((element.winfo_x(),element.winfo_y()))
+                forgotten_elements.append(element)
+                element.place_forget()
+            except:
+                pass 
             
-            element_locations.append((element.winfo_x(),element.winfo_y()))
-            forgotten_elements.append(element)
-            element.place_forget()
+           
     
     for box in fortune_boxes:
         main_canvas.delete(box)
