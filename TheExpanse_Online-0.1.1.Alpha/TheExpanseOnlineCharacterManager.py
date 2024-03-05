@@ -305,7 +305,7 @@ def Edit_displayed_character(stats):
     
     
     back_button.place(x=10,y=10)
-    save_button.place(x=10,y=800)
+    save_button.place(x=10,y=850)
     
     secondary_buttons_andor_elements = []
    
