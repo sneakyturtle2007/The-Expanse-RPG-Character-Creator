@@ -6,7 +6,7 @@
 
 Executable in Executable-TheExpanseOnline_0.0.0.Pre_Alpha folder.
 
-To use just download the folder and run the exe.
+To use just download the contents of folder put them in a new folder and run the exe.
 
 
  0.1.0.Alpha-
@@ -15,7 +15,7 @@ To use just download the folder and run the exe.
 
 Executable in Executable-TheExpanseOnline_0.1.0.Alpha folder.
 
-To use just download the folder and run the exe.
+To use just download the contents of folder put them in a new folder and run the exe.
 
 
  0.1.1.Alpha- Currently in Progress
