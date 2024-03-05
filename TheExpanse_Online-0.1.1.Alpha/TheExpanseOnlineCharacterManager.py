@@ -145,8 +145,6 @@ def get_characters():
     return characters, Existing_characters
 
 
-
-
 #*GENERIC FUNCTIONS - END
 
 #*FUNCTIONS FOR MAIN MENU  - START
@@ -166,7 +164,8 @@ def create_character_card(image_path,x,y, parameters,name):
     
     return character_name_label
 
-def display_characters(characters ,Existing_characters_current):#current_character_cards is not used in this function, but is needed to prevent error because the get_characters function returns current_character_cards
+#current_character_cards is not used in this function, but is needed to prevent error because the get_characters function returns current_character_cards    
+def display_characters(characters ,Existing_characters_current):
     global window_elements,secondary_buttons_andor_elements,Existing_characters
     
     for element in window_elements:
@@ -182,7 +181,6 @@ def display_characters(characters ,Existing_characters_current):#current_charact
 
     main_canvas.config(width=500,height=500)
     window.geometry("500x500")
-    
     
     for character in characters:
         window_elements.append(create_character_card("images\\" + character[0], 37 + (110 *index), increment,Existing_characters[index], character[1]))
