@@ -21,7 +21,6 @@ try:
     from PIL import Image, ImageTk, ImageGrab
 except ImportError:
     subprocess.call(['pip', 'install', 'Pillow'])
-    subprocess.call(['pip', 'install', 're'])
     from PIL import Image, ImageTk, ImageGrab
 try:
     import lorem
@@ -673,8 +672,6 @@ def Character_Sheet_To_JPEG(stats):
             except:
                 pass 
             
-           
-    
     for box in fortune_boxes:
         main_canvas.delete(box)
     
