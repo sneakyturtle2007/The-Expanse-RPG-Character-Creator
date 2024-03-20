@@ -1,0 +1,1 @@
+Name,Weight,Age,Height,Don't use new line characters such as Enter or Return,-2,-1,-1,0,0,0,1,1,1,Belter,Outsider,Bohemian,0,Prone`Injured`Hindered`Helpless`Free-Falling`Wounded`Unconscious`Exhausted`Restrained

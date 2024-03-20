@@ -129,7 +129,7 @@ def get_characters():
             current_character = []
             current_character.append(str(image))
             
-            with open("TheExpanseCharacterCreator.txt") as characters_text:
+            with open("Character_Management//TheExpanseOnlineCharacters_Local.txt") as characters_text:
                 characters2 = characters_text.readlines()
                 
                 Character = characters2[index].split(",")
@@ -418,7 +418,7 @@ def save_displayed_character(stats):
             
             index1 += 1
  
-    Characters_text_file = open("TheExpanseCharacterCreator.txt", "w")
+    Characters_text_file = open("Character_Management//TheExpanseOnlineCharacters_Local.txt", "w")
     index1 = 0
     
     for characters in Existing_characters:
@@ -466,7 +466,7 @@ def save_character_interactables(stats):
         
         index1 += 1
         
-    Characters_text_file = open("TheExpanseCharacterCreator.txt", "w")
+    Characters_text_file = open("Character_Management//TheExpanseOnlineCharacters_Local.txt", "w")
     UpdatedCharacter_list = ""
     index1 = 0
     for characters in Existing_characters:
@@ -1061,7 +1061,7 @@ def save_character():
     current_character_to_string = ""
     old_characters_text = ""
     
-    old_characters = open("TheExpanseCharacterCreator.txt", "r")
+    old_characters = open("Character_Management//TheExpanseOnlineCharacters_Local.txt", "r")
     
     counter = 0
     for index in current_character_being_made:
@@ -1078,7 +1078,7 @@ def save_character():
     
     if(len(old_characters_text) > 0):
         
-        Characters = open("TheExpanseCharacterCreator.txt", "w")
+        Characters = open("Character_Management//TheExpanseOnlineCharacters_Local.txt", "w")
         old_characters_text += "\n"
         old_characters_text += current_character_to_string
         Characters.writelines(old_characters_text)
@@ -1091,7 +1091,7 @@ def save_character():
         
     else:
         
-        Characters = open("TheExpanseCharacterCreator.txt", "w")
+        Characters = open("Character_Management//TheExpanseOnlineCharacters_Local.txt", "w")
         Characters.write(current_character_to_string)
         save_image(current_characeter_image_path)
         old_characters.close()
