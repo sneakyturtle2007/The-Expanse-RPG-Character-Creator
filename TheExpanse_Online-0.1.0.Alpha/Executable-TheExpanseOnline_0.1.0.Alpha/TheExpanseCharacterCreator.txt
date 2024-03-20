@@ -1,1 +1,1 @@
-Name,Age,Height,Weight,Don't use new line characters such as Enter or Return,-2,-1,-1,0,0,0,1,1,1,Belter,Outsider,Bohemian,19,Deafened`Dying
+Name,Age,Height,Weight,Don't use new line characters such as Enter or Return,-2,-1,-1,0,0,0,1,1,1,Belter,Outsider,Bohemian,29,Deafened`Dying`Exhausted`Hindered
