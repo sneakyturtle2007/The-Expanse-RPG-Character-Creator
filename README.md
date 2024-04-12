@@ -1,6 +1,6 @@
 # The Expanse Online
    
- Proto-
+ Prototype-
   - Basic stats editable  
   - Can make characters
 
