@@ -20,8 +20,8 @@ To use just download the contents of folder put them in a new folder and run the
 
  0.1.1.Pre_Alpha- Currently in Progress
 
-# Creators of The Expanse RPG: Green Ronin Publishing
+## Creators of The Expanse RPG: Green Ronin Publishing
 
-# Creator of The Expanse: James S. A. Corey
+## Creator of The Expanse: James S. A. Corey
 
-# Creator of The-Expanse-Online: Luis A. Blake
+## Creator of The-Expanse-Online: Luis A. Blake
